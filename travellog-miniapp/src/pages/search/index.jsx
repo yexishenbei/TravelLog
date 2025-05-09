@@ -2,11 +2,9 @@ import { View, Text } from "@tarojs/components";
 import { useEffect } from "react";
 import Taro from "@tarojs/taro";
 import { userStorage } from "../../services/storage";
-import "./index.scss";
 
-const Index = () => {
+const Search = () => {
   useEffect(() => {
-    // 检查用户是否已登录
     const user = userStorage.getCurrentUser();
     if (!user) {
       Taro.redirectTo({ url: "/pages/login/index" });
@@ -15,10 +13,9 @@ const Index = () => {
 
   return (
     <View>
-      <Text>欢迎使用旅游日记</Text>
-      <Text>记录你的每一次旅行</Text>
+      <Text>搜索</Text>
     </View>
   );
 };
 
-export default Index;
+export default Search;
