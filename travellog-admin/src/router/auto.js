@@ -16,20 +16,20 @@ const routes = [{
   [MENU_PATH]: "/list/search",
   components: () => import("..\\pages\\list\\search.tsx")
 }, {
-  [MENU_PATH]: "/statistics/visitor",
-  components: () => import("..\\pages\\statistics\\vistor.tsx")
-}, {
-  [MENU_PATH]: "/icons",
-  components: () => import("..\\pages\\icons\\index.tsx")
+  [MENU_PATH]: "/power/type",
+  components: () => import("..\\pages\\power\\type.tsx")
 }, {
   [MENU_PATH]: "/power/menu",
   components: () => import("..\\pages\\power\\menu.tsx")
 }, {
-  [MENU_PATH]: "/power/type",
-  components: () => import("..\\pages\\power\\type.tsx")
-}, {
   [MENU_PATH]: "/power/user",
   components: () => import("..\\pages\\power\\user.tsx")
+}, {
+  [MENU_PATH]: "/icons",
+  components: () => import("..\\pages\\icons\\index.tsx")
+}, {
+  [MENU_PATH]: "/statistics/visitor",
+  components: () => import("..\\pages\\statistics\\vistor.tsx")
 }];
     
 

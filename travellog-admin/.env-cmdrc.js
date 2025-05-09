@@ -1,6 +1,6 @@
 
 const devConfig = {
-  PORT: 3002, // 启动端口
+  PORT: 3001, // 启动端口
   HOST: "0.0.0.0", // 监听地址
   NODE_ENV: "development", // 开发者模式
   REACT_APP_ROUTERBASE: "/react-ant-admin", // react路由基础路径

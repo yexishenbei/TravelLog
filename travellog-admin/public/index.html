@@ -1,43 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+  <title>react-ant-admin</title>
+  <meta name="description" content="此框架使用与二次开发，前端框架使用react，UI框架使用ant-design，全局数据状态管理使用redux，ajax使用库为axios。用于快速搭建中后台页面。">
+  <meta name="keywords" content="react-ant-admin适用于快速搭建中后台页面，管理系统架构。react全家桶。admin管理系统">
+  <style>
+    .mesh-loader {
+        overflow: hidden;
+        height: 100vh;
+        width: 100vw;
+    }
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+    .mesh-loader .circle {
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        background: #03A9F4;
+        border-radius: 50%;
+        margin: -12.5px;
+        -webkit-animation: mesh 3s ease-in-out infinite;
+        animation: mesh 3s ease-in-out infinite -1.5s;
+    }
+
+    .mesh-loader > div .circle:last-child {
+        -webkit-animation-delay: 0s;
+        animation-delay: 0s;
+    }
+
+    .mesh-loader > div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+    }
+
+    .mesh-loader > div:last-child {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+
+    @-webkit-keyframes mesh {
+      0% {
+        -webkit-transform-origin: 50% -100%;
+                transform-origin: 50% -100%;
+        -webkit-transform: rotate(0);
+                transform: rotate(0);
+      }
+      50% {
+        -webkit-transform-origin: 50% -100%;
+                transform-origin: 50% -100%;
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+      }
+      50.00001% {
+        -webkit-transform-origin: 50% 200%;
+                transform-origin: 50% 200%;
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform-origin: 50% 200%;
+                transform-origin: 50% 200%;
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+      }
+    }
+    @keyframes mesh {
+      0% {
+        -webkit-transform-origin: 50% -100%;
+                transform-origin: 50% -100%;
+        -webkit-transform: rotate(0);
+                transform: rotate(0);
+      }
+      50% {
+        -webkit-transform-origin: 50% -100%;
+                transform-origin: 50% -100%;
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+      }
+      50.00001% {
+        -webkit-transform-origin: 50% 200%;
+                transform-origin: 50% 200%;
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform-origin: 50% 200%;
+                transform-origin: 50% 200%;
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <% if(htmlWebpackPlugin.options.showColorSet) {%>
+    <link rel="stylesheet/less" type="text/css" href="%PUBLIC_URL%/color.less" />
+    <script> window.less = { async: false, env: 'production' };</script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/less.js/2.7.3/less.min.js"></script>
+  <%}%>
+      <noscript>You need to enable JavaScript to run this app.</noscript>
+      <div id="root">
+        <div class="mesh-loader">
+          <div class="set-one">
+              <div class="circle"></div>
+              <div class="circle"></div>
+          </div>
+          <div class="set-two">
+              <div class="circle"></div>
+              <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+</body>
+
 </html>

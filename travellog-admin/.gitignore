@@ -4,13 +4,17 @@
 /node_modules
 /.pnp
 .pnp.js
-
+yarn.lock
+package-lock.json
+/color.json.js
+/src/assets/theme/*.json
 # testing
 /coverage
+/src/router/auto**
 
 # production
-/build
-
+/react-ant-admin
+/public/color.less
 # misc
 .DS_Store
 .env.local
