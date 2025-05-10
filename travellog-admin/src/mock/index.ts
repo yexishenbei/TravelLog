@@ -58,6 +58,15 @@ let currentUser = userInfoList[0];
 
 let menu: MenuList = [
   {
+    [MENU_TITLE]: "游记管理",
+    [MENU_PATH]: "/logManagement",
+    [MENU_KEY]: 20,
+    [MENU_PARENTKEY]: null,
+    [MENU_ICON]: "icon_list",
+    [MENU_KEEPALIVE]: "false",
+    [MENU_ORDER]: 1,
+  },
+  {
     [MENU_TITLE]: "列表页",
     [MENU_PATH]: "/list",
     [MENU_KEY]: 9,
@@ -224,9 +233,9 @@ const typeList = [
   {
     type_id: 1,
     name: "超级管理员",
-    menu_id: "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,1",
+    menu_id: "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,20,1",
   },
-  { type_id: 2, name: "用户", menu_id: "1,9,10,11,2,7,6,17,18,16,3,4,5,8" },
+  { type_id: 2, name: "用户", menu_id: "1,9,10,11,2,7,6,17,18,16,3,4,5,20,8" },
   { type_id: 3, name: "游客", menu_id: "9,1,10,11,2,7,6,17,18,12" },
   { type_id: 4, name: "低权游客", menu_id: "9,10" },
 ];
