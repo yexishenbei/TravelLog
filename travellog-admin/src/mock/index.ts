@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { message } from "antd";
-import { PowerApi, LoginApi, ResponseData, MenuInfoApi, MessageList, MessageAPi, MenuResponse, MenuList, MenuItem } from "@/types"
+// 引入了游记列表类型
+import { PowerApi, LoginApi, ResponseData, MenuInfoApi, MessageList, MessageAPi, MenuResponse, MenuList, MenuItem,LogList, LogListApi } from "@/types"
 import { formatMenu } from "@/utils";
 
 type MockDataType = {
@@ -10,13 +11,15 @@ type MockDataType = {
   "/addmenu": ResponseData
   "/addmessage": ResponseData
   "/getmessage": MessageAPi
+  // 新增获取游记的接口
+  "/getloglist": LogListApi
   "/delmenu": ResponseData
   "/getmenuinfo": ResponseData & { data: MenuItem | null }
   "/editmenuinfo": ResponseData
   "/getvisitordata": ResponseData
   [key: string]: ResponseData | MenuList | PowerApi | LoginApi | MenuInfoApi | MenuResponse
 }
-
+// 用户信息
 const userInfoList = [
   {
     user_id: 1,
@@ -56,6 +59,7 @@ const userInfoList = [
 ];
 let currentUser = userInfoList[0];
 
+// 菜单栏信息
 let menu: MenuList = [
   {
     [MENU_TITLE]: "游记管理",
@@ -229,6 +233,8 @@ let menu: MenuList = [
     [MENU_ORDER]: 10,
   },
 ];
+
+// 每种用户拥有的权限信息
 const typeList = [
   {
     type_id: 1,
@@ -239,6 +245,7 @@ const typeList = [
   { type_id: 3, name: "游客", menu_id: "9,1,10,11,2,7,6,17,18,12" },
   { type_id: 4, name: "低权游客", menu_id: "9,10" },
 ];
+
 const power = {
   status: 0,
   data: typeList,
@@ -263,6 +270,7 @@ const addMenu = {
 };
 const addMsg = { msg: "添加成功", status: 0 };
 
+// 获取信息列表
 const msgList: MessageList = [
   {
     m_id: 1,
@@ -312,6 +320,70 @@ const msg: MessageAPi = {
 
   msg: "",
 };
+
+// 游记列表
+const logList: LogList = [
+  {
+    log_id: 1,
+    title: "上海城市印象",
+    content: `
+      <h2>外滩夜景</h2>
+      <p>这是我第一次来到上海，夜晚的外滩灯火辉煌，令人震撼。</p>
+      <img src="https://dummyimage.com/600x400/ccc/000&text=外滩夜景" />
+      <p>这里有很多故事，也有很多人。</p>
+    `,
+    creator: "张同学",
+    add_time: "2024-12-01 10:30:00",
+    status: "待审核",
+  },
+  {
+    log_id: 2,
+    title: "迪士尼亲子行",
+    content: `
+      <h2>美妙的一天</h2>
+      <p>和家人一起在迪士尼度过了开心的一天。</p>
+      <img src="https://dummyimage.com/600x400/faf/000&text=迪士尼合影" />
+      <video width="400" controls>
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        您的浏览器不支持视频播放。
+      </video>
+      <p>孩子们玩得特别开心！</p>
+    `,
+    creator: "王五",
+    add_time: "2025-01-15 14:00:00",
+    status: "已通过",
+  },
+  {
+    log_id: 3,
+    title: "乌镇水乡游记",
+    content: `
+      <p>乌镇的水巷非常有特色，古色古香。</p>
+      <img src="https://dummyimage.com/600x300/ddd/000&text=乌镇水巷" />
+    `,
+    creator: "李四",
+    add_time: "2025-03-12 08:25:00",
+    status: "已拒绝",
+  },
+];
+const logApi: LogListApi = {
+  status: 0,
+  msg: "",
+  data: {
+    total: logList.length,
+    list: logList,
+    mapKey: [
+      { title: "序号", dataIndex: "log_id", key: "log_id" },
+      { title: "标题", dataIndex: "title", key: "title" },
+      { title: "创建人", dataIndex: "creator", key: "creator" },
+      { title: "创建时间", dataIndex: "add_time", key: "add_time" },
+      { title: "审核状态", dataIndex: "status", key: "status" },
+      // { title: "操作", dataIndex: "active", key: "active" },
+    ],
+  },
+};
+
+
+
 const delMenu = { msg: "操作成功", status: 0 };
 // const MenuMapKey = [
 //   { title: "菜单id", dataIndex: "menu_id", key: "menu_id" },
@@ -331,11 +403,15 @@ const MockData: MockDataType = {
   "/addmessage": addMsg,
   "/getmessage": msg,
   "/delmenu": delMenu,
+  // 注册获取游记api
+  "/getloglist": logApi,
   "/getmenuinfo": { status: 0, msg: '', data: null },
   "/editmenuinfo": { status: 0, msg: "修改成功！" },
   "/getvisitordata": { status: 1, msg: "暂无" },
 };
 type UrlType = keyof MockDataType
+
+// 模拟的get请求
 function get(url: UrlType) {
   return new Promise((res) => {
     setTimeout(() => {
@@ -363,7 +439,7 @@ function get(url: UrlType) {
   });
 }
 
-
+// 模拟的post请求
 
 function post(url: UrlType, data: any) {
   return new Promise((res, rej) => {
@@ -410,6 +486,7 @@ function post(url: UrlType, data: any) {
           });
           return res(MockData[url]);
         case "/getmessage":
+          console.log("我是post请求，我被执行")
           let list = [...msgList];
           if (data.name) {
             list = list.filter((i) => i.name.includes(data.name));
@@ -423,9 +500,13 @@ function post(url: UrlType, data: any) {
             msg.data.list = list;
           }
           return res(msg);
+
+        case "/getloglist":
+          return res(logApi);
+
         default:
-          res({ status: 1, msg: "暂无" });
-          break;
+        res({ status: 1, msg: "暂无" });
+        break;
       }
     }, 100);
   }).then((res: any) => {

@@ -1,170 +1,131 @@
-import { useState } from "react";
-import {
-  Form,
-  Input,
-  Modal,
-  Button,
-  Row,
-  Col,
-  Spin,
-  message,
-} from "antd";
-import MyPagination, { PageInfo } from "@/components/pagination";
-import { getMsg, addMsg } from "@/api";
+import { useEffect, useState } from "react";
+import { Button, Row, Col, Popconfirm, message } from "antd";
 import MyTable from "@/components/table";
+import LogDetailModal from "@/components/modal/log/logDetail";
+// import { getLogList, approveLog, rejectLog, deleteLog } from "@/api";
+import { getLogList } from "@/api";
+import { LogItem, LogList, MapKey } from "@/types";
 import "./index.less";
-import { MessageList, MapKey } from "@/types"
 
-export default function LogManagement() {
-  const [form] = Form.useForm();
-  const [searchForm] = Form.useForm();
-  const [pageData, setPageData] = useState<PageInfo>({ page: 1 });
-  const [tableData, setData] = useState<MessageList>([]);
+function useLogs() {
+  const [tableData, setData] = useState<LogList>([]);
   const [tableCol, setCol] = useState<MapKey>([]);
-  const [load, setLoad] = useState(true);
-  const [total, setTotal] = useState(0);
-  const [showModal, setShow] = useState(false);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
+  const [detailVisible, setDetailVisible] = useState(false);
+  const [currentLog, setCurrentLog] = useState<LogItem | null>(null);
 
-  // 获取列表
-  const getDataList = (data: PageInfo) => {
-    getMsg(data).then((res) => {
-      const { data, status } = res;
-      if (status === 0 && data) {
-        let { list, total, mapKey } = data;
-        mapKey = mapKey.map((i) => {
-          if (i.key === "description") {
-            i.width = 500;
-          }
-          return i;
-        });
-        setCol(mapKey);
-        setTotal(total);
-        setData(list.map((i) => ({ ...i, key: i.m_id })));
-        setLoad(false);
-        return;
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = () => {
+    getLogList().then((res) => {
+      if (res.status === 0 && res.data) {
+        const actionCol = {
+          title: "操作",
+          dataIndex: "action",
+          key: "action",
+          align: "center",
+          render: (_: any, record: LogItem) => (
+            <>
+              <Button type="link" onClick={() => handleViewDetail(record)}>查看详情</Button>
+              <Button type="link" onClick={() => handleApprove(record.log_id)}>通过</Button>
+              <Button type="link" danger onClick={() => handleReject(record.log_id)}>拒绝</Button>
+              <Popconfirm title="确认删除？" onConfirm={() => handleDelete(record.log_id)}>
+                <Button type="link" danger>删除</Button>
+              </Popconfirm>
+            </>
+          )
+        };
+        res.data.mapKey.push(actionCol);
+        setCol(res.data.mapKey);
+        setData(res.data.list);
       }
     });
   };
 
-  // 添加列表
-  const addList = () => {
-    form.validateFields().then((values) => {
-      addMsg(values).then((res) => {
-        if (res.status === 0) {
-          form.resetFields();
-          message.success(res.msg);
-          setShow(false);
-          search();
-        }
-      });
-    });
+  const handleApprove = (id: number) => {
+    console.log("按钮功能暂时未实现")
+    // approveLog(id).then(() => {
+    //   message.success("审核通过");
+    //   getData();
+    // });
   };
 
-  // 顶部搜索
-  const search = () => {
-    let data = searchForm.getFieldsValue();
-    setPageData({ page: 1 })
-    getDataList(data);
+  const handleReject = (id: number) => {
+    console.log("没实现呢！！！")
+    // rejectLog(id).then(() => {
+    //   message.warning("已拒绝");
+    //   getData();
+    // });
   };
 
-  // 页码改版
-  const pageChange = (pageData: PageInfo) => {
-    let data = searchForm.getFieldsValue();
-    getDataList({ ...pageData, ...data });
-    setPageData(pageData);
+  const handleDelete = (id: number) => {
+    console.log("暂时未实现删除功能")
+    console.log("我就看看打印的id",id)
+    // deleteLog(id).then(() => {
+    //   message.success("删除成功");
+    //   getData();
+    // });
   };
 
-  const tableTop = (
-    <Row justify="space-between" gutter={80}>
-      <Col style={{ lineHeight: "32px" }}>表格查询</Col>
-      <Col>
-        <Button type="primary" onClick={() => setShow(true)}>
-          添加消息
-        </Button>
-      </Col>
-    </Row>
-  );
+  const handleViewDetail = (log: LogItem) => {
+    setCurrentLog(log);
+    setDetailVisible(true);
+  };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: (newKeys: React.Key[]) => {
+      setSelectedRowKeys(newKeys as number[]);
+    }
+  };
+
+  return {
+    tableCol,
+    tableData,
+    rowSelection,
+    detailVisible,
+    currentLog,
+    setDetailVisible
+  };
+}
+
+export default function LogManagement() {
+  const {
+    tableCol,
+    tableData,
+    rowSelection,
+    detailVisible,
+    currentLog,
+    setDetailVisible
+  } = useLogs();
+
   return (
-    <div className="search-container">
-      <Spin spinning={load}>
-        <div className="top-form">
-          <Form layout="inline" form={searchForm}>
-            <Form.Item name="name">
-              <Input placeholder="输入消息名称" />
-            </Form.Item>
-            <Form.Item name="description">
-              <Input placeholder="输入消息描述词" />
-            </Form.Item>
-            <Button onClick={search} type="primary" className="submit-btn">
-              搜索
-            </Button>
-            <Button
-              onClick={() => {
-                searchForm.resetFields();
-                search();
-              }}
-            >
-              清空
-            </Button>
-          </Form>
-        </div>
-        
-        <MyTable
-          title={() => tableTop}
-          dataSource={tableData}
-          columns={tableCol}
-          pagination={false}
-          saveKey="MyListSearch"
-        />
-        <MyPagination
-          page={pageData.page}
-          immediately={getDataList}
-          change={pageChange}
-          total={total}
-        />
-      </Spin>
-      <Modal
-        title="添加一条记录"
-        visible={showModal}
-        cancelText="取消"
-        okText="添加"
-        onOk={() => addList()}
-        onCancel={() => setShow(false)}
-      >
-        <Form form={form}>
-          <Form.Item
-            label="消息名称"
-            name="name"
-            rules={[
-              {
-                required: true,
-                message: "Please input your name!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="消息描述"
-            name="description"
-            rules={[
-              {
-                required: true,
-                message: "Please input your description!",
-              },
-              {
-                min: 10,
-                message: "The description must be more than 10 words!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-        </Form>
-      </Modal>
+    <div className="type-container">
+      <Row justify="space-between" gutter={80} style={{ marginBottom: 16 }}>
+        <Col style={{ lineHeight: "32px" }}>游记管理列表</Col>
+        <Col>
+          <Button type="primary" disabled>批量审核功能暂未实现</Button>
+        </Col>
+      </Row>
+
+      <MyTable
+        rowKey="log_id"
+        rowSelection={rowSelection}
+        columns={tableCol}
+        dataSource={tableData}
+      />
+
+      <LogDetailModal
+        visible={detailVisible}
+        log={currentLog}
+        onCancel={() => setDetailVisible(false)}
+      />
     </div>
   );
 }
+
 LogManagement.route = {
-  [MENU_PATH]: "/logManagement",
+  [MENU_PATH]: "/logManagement"
 };

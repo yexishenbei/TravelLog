@@ -1,6 +1,6 @@
 import ajax from "@/common/ajax";
 import mock from "../mock/index";
-import { MessageAPi, ResponseData, LoginApi, PowerApi, MenuInfoApi, UserListApi, ResponseUserInfo, VisitorApi, VisitorListApi, MenuResponse, MenuListResponse } from "@/types"
+import { MessageAPi, ResponseData, LoginApi, PowerApi, MenuInfoApi, UserListApi, ResponseUserInfo, VisitorApi, VisitorListApi, MenuResponse, MenuListResponse,LogListApi } from "@/types"
 
 const request = process.env.REACT_APP_MOCK === "1" ? mock : ajax;
 
@@ -10,6 +10,7 @@ const login = (data: any) => request.post("/login", data) as Promise<LoginApi>;
 const addMenu = (data: any) => request.post("/addmenu", data) as Promise<ResponseData>;
 const addMsg = (data: any) => request.post("/addmessage", data) as Promise<ResponseData>;
 const getMsg = (data: any) => request.get("/getmessage", data) as Promise<MessageAPi>;
+// const getMsg = (data: any) => request.post("/getmessage", data) as Promise<MessageAPi>;
 const getPower = () => request.get("/getpower") as Promise<PowerApi>;
 const delMenu = (data: any) => request.post("/delmenu", data) as Promise<ResponseData>;
 const getMenuInfo = (data: any) => request.get("/getmenuinfo", data) as Promise<MenuInfoApi>;
@@ -22,6 +23,13 @@ const getUser = (data: any) => request.get("/getuserinfo", data) as Promise<Resp
 const editUser = (data: any) => request.post("/edituserinfo", data) as Promise<ResponseData>;
 const editType = (data: any) => request.post("/edittype", data) as Promise<ResponseData>;
 const addType = (data: any) => request.post("/addtype", data) as Promise<ResponseData>;
+
+// 游记相关，目前只有第一个是被实现的，所以只暴露第一个
+const getLogList = () => request.post("/getloglist", {}) as Promise<LogListApi>;
+const approveLog = (id: number) => request.post("/approvelog", { log_id: id }) as Promise<ResponseData>;
+const rejectLog = (id: number) => request.post("/rejectlog", { log_id: id }) as Promise<ResponseData>;
+const deleteLog = (id: number) => request.post("/dellog", { log_id: id }) as Promise<ResponseData>;
+
 export {
   getMenu,
   login,
@@ -40,5 +48,6 @@ export {
   editUser,
   editType,
   addType,
-  getMenuList
+  getMenuList,
+  getLogList,
 };

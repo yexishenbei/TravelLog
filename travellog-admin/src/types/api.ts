@@ -1,6 +1,31 @@
 import { UserInfo } from "./user"
 import { MenuItem, MenuList } from "./menu"
 export type MessageList = MessageItem[]
+
+// 以下是游记相关数据的类型定义
+export type LogList = LogItem[]
+
+export type LogStatus = "待审核" | "已通过" | "已拒绝"
+
+export type LogItem = {
+  log_id: number             // 游记唯一ID
+  title: string              // 游记标题
+  content: string            // 游记正文（用于详情展示）
+  creator: string            // 创建人
+  add_time: string           // 创建时间
+  status: LogStatus          // 审核状态
+}
+
+// 接口返回类型
+export interface LogListApi extends ResponseData {
+  data: {
+    total: number
+    mapKey: MapKey
+    list: LogList
+  }
+}
+
+
 type MessageItem = {
   add_time: string
   creator: string
