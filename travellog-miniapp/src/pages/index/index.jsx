@@ -1,22 +1,43 @@
 import { View, Text } from "@tarojs/components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
-import { userStorage } from "../../services/storage";
 import "./index.scss";
+import { useAuthCheck } from "../../hooks/useAuthCheck";
 
 const Index = () => {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // 使用认证检查 hook
+  useAuthCheck();
+
   useEffect(() => {
-    // 检查用户是否已登录
-    const user = userStorage.getCurrentUser();
-    if (!user) {
-      Taro.redirectTo({ url: "/pages/login/index" });
-    }
+    // 这里可以添加加载首页数据的逻辑
+    setLoading(false);
   }, []);
 
+  if (loading) {
+    return (
+      <View className="loading">
+        <Text>加载中...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View className="error">
+        <Text>{error}</Text>
+      </View>
+    );
+  }
+
   return (
-    <View>
-      <Text>欢迎使用旅游日记</Text>
-      <Text>记录你的每一次旅行</Text>
+    <View className="index-page">
+      <View className="welcome">
+        <Text className="title">欢迎使用旅游日记</Text>
+        <Text className="subtitle">记录你的每一次旅行</Text>
+      </View>
     </View>
   );
 };
