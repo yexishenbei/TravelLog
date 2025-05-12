@@ -1,48 +1,83 @@
-import { Component } from 'react'
-import { connect } from 'react-redux'
-import { View, Button, Text } from '@tarojs/components'
+import { View, Text, Button, Image } from "@tarojs/components";
+import { useEffect, useState } from "react";
+import Taro from "@tarojs/taro";
+import "./index.scss";
 
-import { add, minus, asyncAdd } from '../../actions/counter'
+const ProfilePage = () => {
+  const [user, setUser] = useState(null);
+  const [notes, setNotes] = useState([]);
 
-import './index.scss'
+  useEffect(() => {
+    const storedUser = Taro.getStorageSync("userInfo");
+    if (!storedUser) {
+      Taro.redirectTo({ url: "/pages/login/index" });
+    } else {
+      setUser(storedUser);
+      fetchUserNotes(storedUser.username);
+    }
+  }, []);
 
+  const fetchUserNotes = async (username) => {
+    const res = await Taro.request({
+      url: "http://localhost:3000/api/user/notes",
+      method: "POST",
+      data: { username },
+    });
+    setNotes(res.data.data || []);
+  };
 
-@connect(({ counter }) => ({
-  counter
-}), (dispatch) => ({
-  add () {
-    dispatch(add())
-  },
-  dec () {
-    dispatch(minus())
-  },
-  asyncAdd () {
-    dispatch(asyncAdd())
-  }
-}))
-class User extends Component {
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
-  }
+  const handleDelete = async (id) => {
+    await Taro.request({
+      url: "http://localhost:3000/api/note/delete",
+      method: "POST",
+      data: { id },
+    });
+    fetchUserNotes(user.username);
+  };
 
-  componentWillUnmount () { }
+  const handleEdit = (note) => {
+    Taro.navigateTo({
+      url: `/pages/note/edit?id=${note.log_id}`,
+    });
+  };
 
-  componentDidShow () { }
-
-  componentDidHide () { }
-
-  render () {
-    return (
-      <View className='user'>
-        <Button className='add_btn' onClick={this.props.add}>+</Button>
-        <Button className='dec_btn' onClick={this.props.dec}>-</Button>
-        <Button className='dec_btn' onClick={this.props.asyncAdd}>async</Button>
-        <View><Text>{this.props.counter.num}</Text></View>
-        <View><Text>Hello, World</Text></View>
+  return (
+    <View className="profile-page">
+      <View className="user-info">
+        <Image
+          className="avatar"
+          src="https://via.placeholder.com/80?text=头像"
+        />
+        <Text className="username">{user?.username}</Text>
       </View>
-    )
-  }
-}
 
-export default User
+      <View className="note-list">
+        {notes.map((note) => (
+          <View key={note.log_id} className="note-item">
+            <View className="note-header">
+              <Text className="note-title">{note.title}</Text>
+              <Text className={`status ${note.status}`}>{note.status}</Text>
+            </View>
+            <Text className="note-content">
+              {note.content.replace(/<[^>]+>/g, "").slice(0, 100)}...
+            </Text>
+            <View className="actions">
+              <Button size="mini" onClick={() => handleEdit(note)}>
+                修改
+              </Button>
+              <Button
+                size="mini"
+                type="warn"
+                onClick={() => handleDelete(note.log_id)}
+              >
+                删除
+              </Button>
+            </View>
+          </View>
+        ))}
+      </View>
+    </View>
+  );
+};
 
+export default ProfilePage;
