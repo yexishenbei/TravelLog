@@ -7,6 +7,7 @@ const path = require("path");
 const app = express();
 const port = 3000;
 const usersFilePath = path.join(__dirname, "mock", "users.json");
+const notesFilePath = path.join(__dirname, "mock", "note.json");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -78,6 +79,21 @@ app.post("/api/login", (req, res) => {
         username: user.username,
       },
     },
+  });
+});
+
+// 读取 note.json 文件
+function getNotes() {
+  const notesData = fs.readFileSync(notesFilePath, "utf-8");
+  return JSON.parse(notesData);
+}
+
+// 模拟返回游记数据
+app.get("/api/notes", (req, res) => {
+  const notes = getNotes();
+  res.json({
+    status: "success",
+    data: notes,
   });
 });
 

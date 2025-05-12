@@ -3,17 +3,35 @@ import { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
 import "./index.scss";
 import { useAuthCheck } from "../../hooks/useAuthCheck";
+import NoteCard from "../../components/NoteCard";
 
 const Index = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [notes, setNotes] = useState([]);
 
   // 使用认证检查 hook
   useAuthCheck();
 
+  // 加载游记数据
   useEffect(() => {
-    // 这里可以添加加载首页数据的逻辑
-    setLoading(false);
+    setLoading(true);
+    Taro.request({
+      url: "http://localhost:3000/api/notes",
+      method: "GET",
+      success: (res) => {
+        if (res.data.status === "success") {
+          setNotes(res.data.data);
+        } else {
+          setError("获取数据失败");
+        }
+        setLoading(false);
+      },
+      fail: () => {
+        setError("请求失败，请稍后再试");
+        setLoading(false);
+      },
+    });
   }, []);
 
   if (loading) {
@@ -32,11 +50,23 @@ const Index = () => {
     );
   }
 
+  // 将游记分为两列
+  const leftColumn = notes.filter((_, index) => index % 2 === 0);
+  const rightColumn = notes.filter((_, index) => index % 2 === 1);
+
   return (
     <View className="index-page">
-      <View className="welcome">
-        <Text className="title">欢迎使用旅游日记</Text>
-        <Text className="subtitle">记录你的每一次旅行</Text>
+      <View className="waterfall-container">
+        <View className="waterfall-column">
+          {leftColumn.map((note) => (
+            <NoteCard key={note.id} note={note} />
+          ))}
+        </View>
+        <View className="waterfall-column">
+          {rightColumn.map((note) => (
+            <NoteCard key={note.id} note={note} />
+          ))}
+        </View>
       </View>
     </View>
   );
