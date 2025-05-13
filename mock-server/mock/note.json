@@ -1,11 +1,21 @@
 [
   {
+    "title": "testaddnote",
+    "content": "成功",
+    "creator": "张同学",
+    "add_time": "2025-05-13T17:41:06.974Z",
+    "status": "pending",
+    "images": ["http://tmp/mbwKFrRdK0iTa54b6947ec75cb822315860bebecc482.png"],
+    "videos": [],
+    "log_id": "1747158066992"
+  },
+  {
     "title": "发布笔记 修改笔记",
     "content": "测试修改功能 测试发布功能",
     "creator": "张同学",
     "add_time": "2025-05-13T14:36:11.067Z",
     "status": "pending",
-    "images": ["http://tmp/NdQZuBX5ucmXfa1cdbeca4c714d188aa781ecc73dac0.png"],
+    "images": ["http://tmp/mbwKFrRdK0iTa54b6947ec75cb822315860bebecc482.png"],
     "videos": [],
     "log_id": "1747146971077"
   },
@@ -97,7 +107,7 @@
     "videos": []
   },
   {
-    "log_id": 8,
+    "log_id": "8",
     "title": "成都美食之旅",
     "content": "从火锅到串串，从兔头到抄手，成都的美食让人流连忘返。",
     "creator": "郑十",
@@ -122,7 +132,7 @@
   },
   {
     "log_id": "10",
-    "title": "丽江古城夜色",
+    "title": "丽江古城",
     "content": "古城的夜晚，灯火阑珊，别有一番韵味。",
     "creator": "孙十二",
     "add_time": "2025-01-25 20:30:00",

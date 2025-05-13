@@ -70,14 +70,15 @@ const NoteDetail = () => {
   // 正常展示笔记详情
   return (
     <View className="detail-page">
-      <View className="note-header">
-        <Text className="note-title">{note.title}</Text>
-        <Text className="note-author">发布者: {note.creator}</Text>
-        <Text className="note-time">发布者: {note.add_time}</Text>
+      {/* 用户名 */}
+      <View className="note-user">
+        <Text className="note-author">发布者：{note.creator}</Text>
       </View>
-      <View className="note-content">
-        <Text>{note.content}</Text>
+      {/* 发布时间 */}
+      <View className="note-footer">
+        <Text className="note-time">发布时间：{note.add_time}</Text>
       </View>
+      {/* 图片轮播 */}
       {note.images && note.images.length > 0 && (
         <View className="note-images">
           <Swiper
@@ -90,16 +91,22 @@ const NoteDetail = () => {
           >
             {note.images.map((img, index) => (
               <SwiperItem key={index}>
-                <Image
-                  src={img}
-                  alt={`笔记图片 ${index + 1}`}
-                  className="note-image"
-                />
+                <Image src={img} className="note-image" mode="aspectFill" />
               </SwiperItem>
             ))}
           </Swiper>
         </View>
       )}
+
+      {/* 标题和内容 */}
+      <View className="note-body">
+        <View>
+          <Text className="note-title">{note.title}</Text>
+        </View>
+        <View>
+          <Text className="note-content">{note.content}</Text>
+        </View>
+      </View>
     </View>
   );
 };

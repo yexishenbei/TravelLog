@@ -33,10 +33,11 @@
 
         .note-title {
           font-weight: bold;
+          font-size: 36px;
         }
 
         .status {
-          font-size: 12px;
+          font-size: 24px;
           padding: 2px 6px;
           border-radius: 4px;
 
@@ -59,7 +60,7 @@
 
       .note-content {
         margin-top: 8px;
-        font-size: 14px;
+        font-size: 24px;
         color: #666;
       }
 
@@ -70,4 +71,12 @@
       }
     }
   }
+}
+.note-thumbnail {
+  width: 100px;
+  height: 70px;
+  border-radius: 8px;
+}
+.note-image-wrapper {
+  height: 100px;
 }

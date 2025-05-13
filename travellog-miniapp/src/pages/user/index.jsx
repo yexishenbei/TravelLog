@@ -54,24 +54,37 @@ const ProfilePage = () => {
       <View className="note-list">
         {notes.map((note) => (
           <View key={note.log_id} className="note-item">
-            <View className="note-header">
-              <Text className="note-title">{note.title}</Text>
-              <Text className={`status ${note.status}`}>{note.status}</Text>
+            <View className="note-image-wrapper">
+              <Image
+                className="note-thumbnail"
+                src={
+                  note.images?.[0] ||
+                  "https://via.placeholder.com/100x70?text=No+Image"
+                }
+                mode="aspectFill"
+              />
             </View>
-            <Text className="note-content">
-              {note.content.replace(/<[^>]+>/g, "").slice(0, 100)}...
-            </Text>
-            <View className="actions">
-              <Button size="mini" onClick={() => handleEdit(note)}>
-                修改
-              </Button>
-              <Button
-                size="mini"
-                type="warn"
-                onClick={() => handleDelete(note.log_id)}
-              >
-                删除
-              </Button>
+
+            <View className="note-info">
+              <View className="note-header">
+                <Text className="note-title">{note.title}</Text>
+                <Text className={`status ${note.status}`}>{note.status}</Text>
+              </View>
+              <Text className="note-content">
+                {note.content.replace(/<[^>]+>/g, "").slice(0, 60)}...
+              </Text>
+              <View className="actions">
+                <Button size="mini" onClick={() => handleEdit(note)}>
+                  修改
+                </Button>
+                <Button
+                  size="mini"
+                  type="warn"
+                  onClick={() => handleDelete(note.log_id)}
+                >
+                  删除
+                </Button>
+              </View>
             </View>
           </View>
         ))}
