@@ -166,9 +166,6 @@ app.post("/api/note/approve", (req, res) => {
   return res.json({ message: "Note approved successfully", status: "success" });
 });
 
-
-
-
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
