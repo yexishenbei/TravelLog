@@ -77,7 +77,7 @@ const Index = () => {
       <View
         className="fab"
         onClick={() => {
-          Taro.navigateTo({ url: "/pages/note/publish" }); // 替换成你的发布页路径
+          Taro.navigateTo({ url: "/pages/note/publish" });
         }}
       >
         +

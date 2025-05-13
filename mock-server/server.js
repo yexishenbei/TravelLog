@@ -139,26 +139,6 @@ app.post("/api/note/delete", (req, res) => {
   res.json({ message: "删除成功" });
 });
 
-// // 修改笔记
-// app.post("/api/note/update", (req, res) => {
-//   const updatedNote = req.body;
-//   let notes = getNotes();
-//   const index = notes.findIndex((note) => note.log_id === updatedNote.log_id);
-
-//   if (index === -1) {
-//     return res.status(404).json({ message: "笔记未找到" });
-//   }
-
-//   notes[index] = { ...notes[index], ...updatedNote };
-//   saveNotes(notes);
-//   res.json({ message: "更新成功" });
-// });
-
-// // 保存 notes 到文件
-// function saveNotes(notes) {
-//   fs.writeFileSync(notesFilePath, JSON.stringify(notes, null, 2), "utf-8");
-// }
-
 // 发布笔记接口
 app.post("/api/notes", (req, res) => {
   const newNote = req.body;

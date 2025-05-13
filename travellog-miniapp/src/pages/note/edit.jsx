@@ -53,7 +53,7 @@ const EditNotePage = () => {
         url: `http://localhost:3000/api/note/update`,
         method: "POST",
         data: {
-          log_id: note.log_id, // 发送 log_id 而不是 id（如果是 log_id 的话）
+          log_id: note.log_id,
           title,
           content,
         },

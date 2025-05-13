@@ -5,9 +5,7 @@
     "creator": "张同学",
     "add_time": "2025-05-13T14:36:11.067Z",
     "status": "pending",
-    "images": [
-      "http://tmp/NdQZuBX5ucmXfa1cdbeca4c714d188aa781ecc73dac0.png"
-    ],
+    "images": ["http://tmp/NdQZuBX5ucmXfa1cdbeca4c714d188aa781ecc73dac0.png"],
     "videos": [],
     "log_id": "1747146971077"
   },
@@ -17,7 +15,7 @@
     "content": "这是我第一次来到上海，夜晚的外滩灯火辉煌，令人震撼。",
     "creator": "张同学",
     "add_time": "2024-12-01 10:30:00",
-    "status": "pending",
+    "status": "approved",
     "images": [
       "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&h=1200&fit=crop",
       "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=800&h=1000&fit=crop"
