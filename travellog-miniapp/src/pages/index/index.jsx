@@ -4,6 +4,7 @@ import Taro from "@tarojs/taro";
 import "./index.scss";
 import { useAuthCheck } from "../../hooks/useAuthCheck";
 import NoteCard from "../../components/NoteCard";
+import Navbar from "../../components/Navbar";
 
 const Index = () => {
   const [loading, setLoading] = useState(true);
@@ -56,6 +57,7 @@ const Index = () => {
 
   return (
     <View className="index-page">
+      <Navbar />
       <View className="waterfall-container">
         <View className="waterfall-column">
           {leftColumn.map((note) => (

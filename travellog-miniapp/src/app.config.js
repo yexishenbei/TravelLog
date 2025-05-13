@@ -10,7 +10,8 @@ export default defineAppConfig({
   ],
 
   window: {
-    backgroundTextStyle: "light",
+    navigationBarBackgroundColor: "#ffffff",
+    navigationBarTextStyle: "black",
   },
   tabBar: {
     list: [

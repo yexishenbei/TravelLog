@@ -5,9 +5,10 @@
     "content": "这是我第一次来到上海，夜晚的外滩灯火辉煌，令人震撼。",
     "creator": "张同学",
     "add_time": "2024-12-01 10:30:00",
-    "status": "待审核",
+    "status": "pending",
     "images": [
-      "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&h=1200&fit=crop"
+      "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&h=1200&fit=crop",
+      "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=800&h=1000&fit=crop"
     ],
     "videos": []
   },
@@ -15,21 +16,23 @@
     "log_id": 2,
     "title": "迪士尼亲子行",
     "content": "和家人一起在迪士尼度过了开心的一天，看到了很多可爱的卡通人物。",
-    "creator": "王五",
+    "creator": "张同学",
     "add_time": "2025-01-15 14:00:00",
-    "status": "已通过",
+    "status": "approved",
     "images": [
-      "https://images.unsplash.com/photo-1560713781-d4a0c5b0c2c9?w=1200&h=800&fit=crop"
+      "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=800&h=1000&fit=crop"
     ],
-    "videos": []
+    "videos": [
+      "https://stream.media.imgix.video/5A2sgD7VEZ02yaP2drZepFPhxwneHLdkh/high.mp4?"
+    ]
   },
   {
     "log_id": 3,
     "title": "乌镇水乡游记",
     "content": "乌镇的水巷非常有特色，古色古香，让人仿佛穿越回了古代。",
-    "creator": "李四",
+    "creator": "张同学",
     "add_time": "2025-03-12 08:25:00",
-    "status": "已拒绝",
+    "status": "rejected",
     "images": [
       "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=800&h=1000&fit=crop"
     ],
@@ -39,9 +42,9 @@
     "log_id": 4,
     "title": "杭州西湖春游",
     "content": "春天的西湖美不胜收，樱花盛开，游人如织。",
-    "creator": "赵六",
+    "creator": "张同学",
     "add_time": "2025-03-20 09:15:00",
-    "status": "已通过",
+    "status": "approved",
     "images": [
       "https://images.unsplash.com/photo-1522383225653-ed111181a951?w=1200&h=900&fit=crop"
     ],
@@ -53,7 +56,7 @@
     "content": "凌晨四点起床，终于看到了壮观的云海日出。",
     "creator": "孙七",
     "add_time": "2025-02-28 05:30:00",
-    "status": "已通过",
+    "status": "approved",
     "images": [
       "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=900&h=1200&fit=crop"
     ],
@@ -65,7 +68,7 @@
     "content": "漫步在古老的胡同里，感受老北京的生活气息。",
     "creator": "周八",
     "add_time": "2025-01-10 11:20:00",
-    "status": "已通过",
+    "status": "approved",
     "images": [
       "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=1200&h=800&fit=crop"
     ],
@@ -77,7 +80,7 @@
     "content": "阳光、沙滩、海浪，这才是真正的度假生活。",
     "creator": "吴九",
     "add_time": "2025-02-15 16:45:00",
-    "status": "已通过",
+    "status": "approved",
     "images": [
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=1200&fit=crop"
     ],
@@ -89,7 +92,7 @@
     "content": "从火锅到串串，从兔头到抄手，成都的美食让人流连忘返。",
     "creator": "郑十",
     "add_time": "2025-03-05 12:30:00",
-    "status": "已通过",
+    "status": "approved",
     "images": [
       "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=1200&h=900&fit=crop"
     ],
@@ -101,7 +104,7 @@
     "content": "大自然的鬼斧神工，造就了如此壮观的山水画卷。",
     "creator": "钱十一",
     "add_time": "2025-02-20 07:45:00",
-    "status": "已通过",
+    "status": "approved",
     "images": [
       "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&h=1300&fit=crop"
     ],
@@ -113,7 +116,7 @@
     "content": "古城的夜晚，灯火阑珊，别有一番韵味。",
     "creator": "孙十二",
     "add_time": "2025-01-25 20:30:00",
-    "status": "已通过",
+    "status": "approved",
     "images": [
       "https://images.unsplash.com/photo-1522383225653-ed111181a951?w=800&h=500&fit=crop"
     ],
@@ -125,7 +128,7 @@
     "content": "漫步在鼓浪屿的小巷中，感受文艺气息。",
     "creator": "李十三",
     "add_time": "2025-03-01 15:20:00",
-    "status": "已通过",
+    "status": "approved",
     "images": [
       "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&h=950&fit=crop"
     ],
@@ -137,7 +140,7 @@
     "content": "骑行在千年古城墙上，感受历史的厚重。",
     "creator": "王十四",
     "add_time": "2025-02-10 09:30:00",
-    "status": "已通过",
+    "status": "approved",
     "images": [
       "https://images.unsplash.com/photo-1522383225653-ed111181a951?w=800&h=650&fit=crop"
     ],

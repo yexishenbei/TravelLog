@@ -1,4 +1,73 @@
-.index {
-  flex-direction: column;
-  width: 100%;
+.profile-page {
+  padding: 20px;
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-right: 12px;
+    }
+
+    .username {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+
+  .note-list {
+    .note-item {
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      margin-bottom: 12px;
+
+      .note-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .note-title {
+          font-weight: bold;
+        }
+
+        .status {
+          font-size: 12px;
+          padding: 2px 6px;
+          border-radius: 4px;
+
+          &.pending {
+            background-color: #ffe58f;
+            color: #ad6800;
+          }
+
+          &.approved {
+            background-color: #d9f7be;
+            color: #389e0d;
+          }
+
+          &.rejected {
+            background-color: #ffccc7;
+            color: #a8071a;
+          }
+        }
+      }
+
+      .note-content {
+        margin-top: 8px;
+        font-size: 14px;
+        color: #666;
+      }
+
+      .actions {
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+      }
+    }
+  }
 }

@@ -1,0 +1,17 @@
+.post-page {
+  padding: 20px;
+
+  input,
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+
+  button {
+    width: 100%;
+  }
+}
