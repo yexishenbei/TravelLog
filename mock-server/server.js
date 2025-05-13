@@ -88,6 +88,17 @@ function getNotes() {
   return JSON.parse(notesData);
 }
 
+// 写入笔记到 JSON 文件
+function saveNotes(notes) {
+  try {
+    // 将更新后的笔记数据写入 note.json 文件
+    fs.writeFileSync(notesFilePath, JSON.stringify(notes, null, 2), 'utf-8');
+  } catch (error) {
+    console.error('Error saving notes:', error);
+    throw new Error('Failed to save notes');
+  }
+}
+
 // 模拟返回游记数据
 app.get("/api/notes", (req, res) => {
   const notes = getNotes();
