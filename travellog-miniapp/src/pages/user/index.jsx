@@ -46,7 +46,7 @@ const ProfilePage = () => {
       <View className="user-info">
         <Image
           className="avatar"
-          src="https://via.placeholder.com/80?text=头像"
+          src={user?.avatar || "https://via.placeholder.com/80?text=头像"}
         />
         <Text className="username">{user?.username}</Text>
       </View>

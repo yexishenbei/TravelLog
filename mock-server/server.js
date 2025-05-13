@@ -48,9 +48,8 @@ function saveNotes(notes) {
   }
 }
 
-// 注册接口
 app.post("/api/register", (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, avatar } = req.body;
 
   if (!username || !password) {
     return res
@@ -65,10 +64,12 @@ app.post("/api/register", (req, res) => {
   }
 
   users[username] = {
-    password,
     id: Date.now().toString(),
     username,
+    password,
+    avatar: avatar || "", // 保存头像（为空也保留字段）
   };
+
   saveUsers();
 
   return res.json({ message: "Registration successful", status: "success" });
