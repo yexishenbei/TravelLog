@@ -53,7 +53,7 @@ const Register = () => {
 
     setLoading(true);
     try {
-      const response = await apiRegister({ username, password });
+      const response = await apiRegister({ username, password, avatar });
       if (response?.data?.status === "error") {
         Taro.showToast({
           title: response?.data?.message || "注册失败",

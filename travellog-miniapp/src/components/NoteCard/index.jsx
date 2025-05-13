@@ -1,4 +1,4 @@
-import { View, Image, Text } from "@tarojs/components";
+import { View, Image, Text, Swiper, SwiperItem } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import "./index.scss";
 
@@ -7,20 +7,35 @@ const NoteCard = ({ note }) => {
   // 点击卡片，跳转到详情页
   const handleClick = () => {
     Taro.navigateTo({
-      url: `/pages/note/detail?id=${note.id}`, // 使用 note.id 进行跳转
+      url: `/pages/note/detail?id=${note.log_id}`,
     });
+    console.log("note", note);
   };
-
-  // 处理图片的默认值
-  const imageUrl =
-    note.images && note.images.length > 0
-      ? note.images[0]
-      : "https://via.placeholder.com/400x300?text=No+Image"; // 默认图片
 
   return (
     <View className="note-card" onClick={handleClick}>
-      {/* 图片部分 */}
-      <Image className="note-image" src={imageUrl} mode="aspectFill" />
+      {/* 如果有多张图片，则使用 Swiper 展示 */}
+      {note.images && note.images.length > 0 ? (
+        <Swiper
+          className="note-image-swiper"
+          indicatorColor="rgba(0, 0, 0, .3)"
+          indicatorActiveColor="#000"
+          circular
+          autoplay
+        >
+          {note.images.map((image, index) => (
+            <SwiperItem key={index}>
+              <Image className="note-image" src={image} mode="aspectFill" />
+            </SwiperItem>
+          ))}
+        </Swiper>
+      ) : (
+        <Image
+          className="note-image"
+          src="https://via.placeholder.com/400x300?text=No+Image"
+          mode="aspectFill"
+        />
+      )}
 
       {/* 游记内容部分 */}
       <View className="note-content">
@@ -36,7 +51,6 @@ const NoteCard = ({ note }) => {
           {/* 在这里展示地点和日期 */}
           <Text className="location">{note.location}</Text>
           <Text className="date">{note.add_time}</Text>{" "}
-          {/* 修改为 add_time 来展示日期 */}
         </View>
       </View>
     </View>

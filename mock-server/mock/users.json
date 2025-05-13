@@ -1,10 +1,24 @@
 {
   "1": {
-    "password": "1111111a"
+    "password": "1111111a",
+    "id": "1747072489886",
+    "username": "1"
   },
   "张同学": {
     "password": "1111111a",
     "id": "1747072489895",
-    "username": "张同学"
+    "username": "张同学",
+    "avatar": "http://tmp/JZRrEyFGSY0j7e732fcd3f9dcd28b59e4fd805f49c8f.png"
+  },
+  "赵同学": {
+    "password": "1111111a",
+    "id": "1747158648297",
+    "username": "赵同学"
+  },
+  "王同学": {
+    "id": "1747158831748",
+    "username": "王同学",
+    "password": "1111111a",
+    "avatar": "http://tmp/JZRrEyFGSY0j7e732fcd3f9dcd28b59e4fd805f49c8f.png"
   }
 }

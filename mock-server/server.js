@@ -28,9 +28,28 @@ function generateToken() {
   return Math.random().toString(36).substring(2) + Date.now().toString(36);
 }
 
-// 注册接口
+// 获取笔记
+function getNotes() {
+  try {
+    const notesData = fs.readFileSync(notesFilePath, "utf-8");
+    return JSON.parse(notesData); // 如果读取失败会抛出异常
+  } catch (error) {
+    console.error("Failed to read notes:", error);
+    return []; // 返回空数组，避免崩溃
+  }
+}
+
+// 保存笔记
+function saveNotes(notes) {
+  try {
+    fs.writeFileSync(notesFilePath, JSON.stringify(notes, null, 2), "utf-8"); // 如果写入失败会抛出异常
+  } catch (error) {
+    console.error("Failed to save notes:", error);
+  }
+}
+
 app.post("/api/register", (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, avatar } = req.body;
 
   if (!username || !password) {
     return res
@@ -45,10 +64,12 @@ app.post("/api/register", (req, res) => {
   }
 
   users[username] = {
-    password,
     id: Date.now().toString(),
     username,
+    password,
+    avatar: avatar || "", // 保存头像（为空也保留字段）
   };
+
   saveUsers();
 
   return res.json({ message: "Registration successful", status: "success" });
@@ -130,19 +151,63 @@ app.post("/api/note/delete", (req, res) => {
   res.json({ message: "删除成功" });
 });
 
-// 修改笔记
-app.post("/api/note/update", (req, res) => {
-  const updatedNote = req.body;
-  let notes = getNotes();
-  const index = notes.findIndex((note) => note.log_id === updatedNote.log_id);
-
-  if (index === -1) {
-    return res.status(404).json({ message: "笔记未找到" });
+// 发布笔记接口
+app.post("/api/notes", (req, res) => {
+  const newNote = req.body;
+  console.log("收到的请求数据:", req.body); // 打印请求数据
+  if (!newNote.title || !newNote.content || !newNote.creator) {
+    return res.status(400).json({ message: "缺少必要字段", status: "error" });
   }
 
-  notes[index] = { ...notes[index], ...updatedNote };
+  const notes = getNotes();
+
+  const log_id = Date.now().toString(); // 生成唯一 ID
+
+  const noteToSave = {
+    ...newNote,
+    log_id, // 添加唯一 ID
+    status: "pending", // 强制设为待审核
+  };
+
+  notes.unshift(noteToSave); // 新笔记放到最前面
   saveNotes(notes);
-  res.json({ message: "更新成功" });
+
+  res.json({ message: "笔记已保存", status: "success" });
+});
+
+// 获取单个笔记
+app.get("/api/notes/:log_id", (req, res) => {
+  const { log_id } = req.params;
+  const notes = getNotes();
+  const note = notes.find((note) => note.log_id === log_id);
+  if (note) {
+    res.json({ status: "success", data: note });
+  } else {
+    res.status(404).json({ message: "笔记未找到", status: "error" });
+  }
+});
+
+app.post("/api/note/update", (req, res) => {
+  const { log_id, title, content } = req.body;
+  console.log("Received update request:", req.body); // 打印请求体
+
+  try {
+    let notes = getNotes(); // 获取所有笔记
+    const index = notes.findIndex((note) => note.log_id === log_id);
+
+    if (index === -1) {
+      return res.status(404).json({ message: "笔记未找到" }); // 如果笔记不存在，返回 404
+    }
+
+    notes[index] = { ...notes[index], title, content, status: "pending" };
+    saveNotes(notes); // 更新并保存笔记
+
+    console.log("Note updated successfully:", notes[index]); // 打印更新后的笔记
+    res.json({ status: "success", message: "笔记更新成功" });
+  } catch (error) {
+    console.error("Error updating note:", error); // 捕获并打印错误
+    res.status(500).json({ message: "内部服务器错误" });
+  }
 });
 
 // 审核通过接口

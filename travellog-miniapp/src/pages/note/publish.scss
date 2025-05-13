@@ -1,17 +1,76 @@
-.post-page {
-  padding: 20px;
+.publish-page {
+  padding: 24px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  box-sizing: border-box;
 
-  input,
-  textarea {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+  .label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 8px;
     font-size: 16px;
+    font-weight: 600;
+    color: #333;
   }
 
-  button {
+  .input,
+  .textarea {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #ddd;
     width: 100%;
+  }
+
+  .textarea {
+    min-height: 100px;
+  }
+
+  .image-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+
+    .preview-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 1px solid #ccc;
+    }
+
+    .choose-btn {
+      width: 80px;
+      height: 80px;
+      background-color: #fff;
+      border-radius: 6px;
+      border: 1px dashed #999;
+      font-size: 12px;
+      color: #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .submit-btn {
+    margin-top: 30px;
+    background-color: #007aff;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    padding: 12px 0;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+  }
+
+  .loading {
+    text-align: center;
+    font-size: 16px;
+    color: #999;
+    padding-top: 80px;
   }
 }

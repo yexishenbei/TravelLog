@@ -1,6 +1,26 @@
 [
   {
-    "log_id": 1,
+    "title": "testaddnote",
+    "content": "成功",
+    "creator": "张同学",
+    "add_time": "2025-05-13T17:41:06.974Z",
+    "status": "pending",
+    "images": ["http://tmp/mbwKFrRdK0iTa54b6947ec75cb822315860bebecc482.png"],
+    "videos": [],
+    "log_id": "1747158066992"
+  },
+  {
+    "title": "发布笔记 修改笔记",
+    "content": "测试修改功能 测试发布功能",
+    "creator": "张同学",
+    "add_time": "2025-05-13T14:36:11.067Z",
+    "status": "pending",
+    "images": ["http://tmp/mbwKFrRdK0iTa54b6947ec75cb822315860bebecc482.png"],
+    "videos": [],
+    "log_id": "1747146971077"
+  },
+  {
+    "log_id": "1",
     "title": "上海城市印象",
     "content": "这是我第一次来到上海，夜晚的外滩灯火辉煌，令人震撼。",
     "creator": "张同学",
@@ -13,12 +33,12 @@
     "videos": []
   },
   {
-    "log_id": 2,
-    "title": "迪士尼亲子行",
+    "log_id": "2",
+    "title": "迪士尼亲子行-改",
     "content": "和家人一起在迪士尼度过了开心的一天，看到了很多可爱的卡通人物。",
     "creator": "张同学",
     "add_time": "2025-01-15 14:00:00",
-    "status": "approved",
+    "status": "pending",
     "images": [
       "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=800&h=1000&fit=crop"
     ],
@@ -27,7 +47,7 @@
     ]
   },
   {
-    "log_id": 3,
+    "log_id": "3",
     "title": "乌镇水乡游记",
     "content": "乌镇的水巷非常有特色，古色古香，让人仿佛穿越回了古代。",
     "creator": "张同学",
@@ -39,7 +59,7 @@
     "videos": []
   },
   {
-    "log_id": 4,
+    "log_id": "4",
     "title": "杭州西湖春游",
     "content": "春天的西湖美不胜收，樱花盛开，游人如织。",
     "creator": "张同学",
@@ -51,7 +71,7 @@
     "videos": []
   },
   {
-    "log_id": 5,
+    "log_id": "5",
     "title": "黄山云海日出",
     "content": "凌晨四点起床，终于看到了壮观的云海日出。",
     "creator": "孙七",
@@ -63,7 +83,7 @@
     "videos": []
   },
   {
-    "log_id": 6,
+    "log_id": "6",
     "title": "北京胡同文化",
     "content": "漫步在古老的胡同里，感受老北京的生活气息。",
     "creator": "周八",
@@ -75,7 +95,7 @@
     "videos": []
   },
   {
-    "log_id": 7,
+    "log_id": "7",
     "title": "三亚海滩度假",
     "content": "阳光、沙滩、海浪，这才是真正的度假生活。",
     "creator": "吴九",
@@ -87,7 +107,7 @@
     "videos": []
   },
   {
-    "log_id": 8,
+    "log_id": "8",
     "title": "成都美食之旅",
     "content": "从火锅到串串，从兔头到抄手，成都的美食让人流连忘返。",
     "creator": "郑十",
@@ -99,7 +119,7 @@
     "videos": []
   },
   {
-    "log_id": 9,
+    "log_id": "9",
     "title": "张家界奇峰异石",
     "content": "大自然的鬼斧神工，造就了如此壮观的山水画卷。",
     "creator": "钱十一",
@@ -111,8 +131,8 @@
     "videos": []
   },
   {
-    "log_id": 10,
-    "title": "丽江古城夜色",
+    "log_id": "10",
+    "title": "丽江古城",
     "content": "古城的夜晚，灯火阑珊，别有一番韵味。",
     "creator": "孙十二",
     "add_time": "2025-01-25 20:30:00",
@@ -123,7 +143,7 @@
     "videos": []
   },
   {
-    "log_id": 11,
+    "log_id": "11",
     "title": "厦门鼓浪屿",
     "content": "漫步在鼓浪屿的小巷中，感受文艺气息。",
     "creator": "李十三",
@@ -135,7 +155,7 @@
     "videos": []
   },
   {
-    "log_id": 12,
+    "log_id": "12",
     "title": "西安古城墙",
     "content": "骑行在千年古城墙上，感受历史的厚重。",
     "creator": "王十四",

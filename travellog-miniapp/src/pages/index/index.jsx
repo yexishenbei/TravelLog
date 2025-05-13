@@ -22,7 +22,11 @@ const Index = () => {
       method: "GET",
       success: (res) => {
         if (res.data.status === "success") {
-          setNotes(res.data.data);
+          // 过滤状态为 'approved' 的笔记
+          const approvedNotes = res.data.data.filter(
+            (note) => note.status === "approved"
+          );
+          setNotes(approvedNotes); // 只保存 approved 状态的笔记
         } else {
           setError("获取数据失败");
         }
@@ -69,6 +73,14 @@ const Index = () => {
             <NoteCard key={note.id} note={note} />
           ))}
         </View>
+      </View>
+      <View
+        className="fab"
+        onClick={() => {
+          Taro.navigateTo({ url: "/pages/note/publish" });
+        }}
+      >
+        +
       </View>
     </View>
   );
