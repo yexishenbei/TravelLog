@@ -564,6 +564,108 @@ function get(url: UrlType) {
 
 // 模拟的post请求
 
+// function post(url: UrlType, data: any) {
+//   return new Promise((res, rej) => {
+//     setTimeout(() => {
+//       switch (url) {
+//         case "/login":
+//           userInfo.data.account = data.account;
+//           if (data.account.indexOf("admin") === -1) {
+//             userInfo.data.type = "1";
+//             userInfo.data.username = "普通用户";
+//           }
+//           return res(userInfo);
+//         case "/addmenu":
+//           menu.push(data);
+//           return res(MockData[url]);
+//         case "/addmessage":
+//           msgList.push({
+//             ...data,
+//             m_id: Math.random(),
+//             creator: userInfo.data.username,
+//             add_time: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+//           });
+//           if (msg.data) {
+//             msg.data.total = msgList.length;
+//           }
+//           return res(MockData[url]);
+//         case "/delmenu":
+//           let newMenu = menu.filter((i) => i[MENU_KEY] !== data[MENU_KEY]);
+//           menu = newMenu.filter((i) => i[MENU_PARENTKEY] !== data[MENU_KEY]);
+//           return res(MockData[url]);
+//         case "/getmenuinfo": {
+//           const findInfo = menu.find((i) => i[MENU_KEY] === data[MENU_KEY]);
+//           if (findInfo) {
+//             MockData[url].data = findInfo;
+//           }
+//           return res(MockData[url]);
+//         }
+//         case "/editmenuinfo":
+//           menu = menu.map((item) => {
+//             if (item[MENU_KEY] === data[MENU_KEY]) {
+//               return data;
+//             }
+//             return item;
+//           });
+//           return res(MockData[url]);
+//         case "/getmessage":
+//           console.log("我是post请求，我被执行")
+//           let list = [...msgList];
+//           if (data.name) {
+//             list = list.filter((i) => i.name.includes(data.name));
+//           }
+//           if (data.description) {
+//             list = list.filter((i) => i.description.includes(data.description));
+//           }
+
+//           if (msg.data) {
+//             msg.data.total = list.length;
+//             msg.data.list = list;
+//           }
+//           return res(msg);
+
+//         case "/getloglist":
+//           return res(logApi);
+
+//         // 通过日志
+//         case "/approvelog":
+//           const approvedLog = logList.find(log => log.log_id === data.log_id);
+//           if (approvedLog) {
+//             approvedLog.status = "已通过"; // 修改为已通过状态
+//             // 数据更新完后，返回成功状态
+//             return res({ status: 0, msg: "审核通过成功" });
+//           }
+//           return res({ status: 1, msg: "未找到日志，审核失败" });
+
+//         // 删除日志
+//         case "/dellog":
+//           const deleteIndex = logList.findIndex(log => log.log_id === data.log_id);
+//           if (deleteIndex !== -1) {
+//             logList.splice(deleteIndex, 1); // 从列表中删除
+//             return res({ status: 0, msg: "删除成功" });
+//           }
+//           return res({ status: 1, msg: "未找到日志，删除失败" });
+
+//         default:
+//         res({ status: 1, msg: "暂无" });
+//         break;
+//       }
+//     }, 100);
+//   }).then((res: any) => {
+//     if (res.status === 0) {
+//       return res
+//     } else {
+//       message.error("接口暂未配置")
+//       return Promise.reject("接口暂未配置")
+//     }
+//   });
+// }
+
+// mock/index.ts 的修改部分
+
+// 只展示需要修改的部分代码
+
+// 模拟的post请求
 function post(url: UrlType, data: any) {
   return new Promise((res, rej) => {
     setTimeout(() => {
@@ -627,20 +729,61 @@ function post(url: UrlType, data: any) {
         case "/getloglist":
           return res(logApi);
 
+        // 通过日志
+        case "/approvelog":
+          const approvedLog = logList.find(log => log.log_id === data.id);
+          if (approvedLog) {
+            approvedLog.status = "已通过"; // 修改为已通过状态
+            // 更新API数据
+            logApi.data.list = [...logList];
+            // 返回成功状态
+            return res({ status: 0, msg: "审核通过成功" });
+          }
+          return rej({ status: 1, msg: "未找到日志，审核失败" });
+
+        // 拒绝日志
+        case "/rejectlog":
+          const rejectedLog = logList.find(log => log.log_id === data.id);
+          if (rejectedLog) {
+            rejectedLog.status = "已拒绝"; // 修改为已拒绝状态
+            // 更新API数据
+            logApi.data.list = [...logList];
+            // 返回成功状态
+            return res({ status: 0, msg: "审核拒绝成功" });
+          }
+          return rej({ status: 1, msg: "未找到日志，拒绝失败" });
+
+        // 删除日志
+        case "/dellog":
+          const deleteIndex = logList.findIndex(log => log.log_id === data.id);
+          if (deleteIndex !== -1) {
+            logList.splice(deleteIndex, 1); // 从列表中删除
+            // 更新API数据
+            logApi.data.list = [...logList];
+            logApi.data.total = logList.length;
+            return res({ status: 0, msg: "删除成功" });
+          }
+          return rej({ status: 1, msg: "未找到日志，删除失败" });
+
         default:
-        res({ status: 1, msg: "暂无" });
-        break;
+          res({ status: 1, msg: "暂无" });
+          break;
       }
     }, 100);
   }).then((res: any) => {
     if (res.status === 0) {
       return res
     } else {
-      message.error("接口暂未配置")
-      return Promise.reject("接口暂未配置")
+      message.error(res.msg || "接口暂未配置")
+      return Promise.reject(res.msg || "接口暂未配置")
     }
+  }).catch((err) => {
+    message.error(err?.msg || "操作失败");
+    return Promise.reject(err);
   });
 }
+
+// 其余代码保持不变...
 
 
 const mock = { get, post };

@@ -24,11 +24,11 @@ const editUser = (data: any) => request.post("/edituserinfo", data) as Promise<R
 const editType = (data: any) => request.post("/edittype", data) as Promise<ResponseData>;
 const addType = (data: any) => request.post("/addtype", data) as Promise<ResponseData>;
 
-// 游记相关，目前只有第一个是被实现的，所以只暴露第一个
+// 游记相关
 const getLogList = () => request.post("/getloglist", {}) as Promise<LogListApi>;
-const approveLog = (id: number) => request.post("/approvelog", { log_id: id }) as Promise<ResponseData>;
-const rejectLog = (id: number) => request.post("/rejectlog", { log_id: id }) as Promise<ResponseData>;
-const deleteLog = (id: number) => request.post("/dellog", { log_id: id }) as Promise<ResponseData>;
+const approveLog = (id: number) => request.post("/approvelog", { id }) as Promise<ResponseData>;
+const rejectLog = (id: number) => request.post("/rejectlog", {  id }) as Promise<ResponseData>;
+const deleteLog = (id: number) => request.post("/dellog", {  id }) as Promise<ResponseData>;
 
 export {
   getMenu,
@@ -50,4 +50,7 @@ export {
   addType,
   getMenuList,
   getLogList,
+  approveLog,
+  rejectLog,
+  deleteLog
 };
