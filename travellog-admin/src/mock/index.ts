@@ -321,16 +321,27 @@ const msg: MessageAPi = {
   msg: "",
 };
 
-// 游记列表
+const ASSET_PATH = process.env.PUBLIC_URL + '/assets/travel'
+// const ASSET_PATH = '../../assets/travel';
+
 const logList: LogList = [
   {
     log_id: 1,
     title: "上海城市印象",
     content: `
-      <h2>外滩夜景</h2>
-      <p>这是我第一次来到上海，夜晚的外滩灯火辉煌，令人震撼。</p>
-      <img src="https://dummyimage.com/600x400/ccc/000&text=外滩夜景" />
-      <p>这里有很多故事，也有很多人。</p>
+      <div class="travel-log">
+        <h2>外滩夜景</h2>
+        <p>这是我第一次来到上海，夜晚的外滩灯火辉煌，令人震撼。</p>
+        <div class="image-wrapper">
+          <img src="${ASSET_PATH}/shanghai/bund-night.jpg" alt="上海外滩夜景" />
+          <div class="caption">外滩的璀璨夜景，浦东的高楼大厦灯光璀璨</div>
+        </div>
+        <p>这里有很多故事，也有很多人。黄浦江两岸的建筑群展现了上海这座城市的现代与历史交融的独特魅力。</p>
+        <div class="image-wrapper">
+          <img src="${ASSET_PATH}/shanghai/traditional-street.jpg" alt="上海老街" />
+          <div class="caption">老上海的石库门建筑，展现了城市的另一面</div>
+        </div>
+      </div>
     `,
     creator: "张同学",
     add_time: "2024-12-01 10:30:00",
@@ -340,14 +351,22 @@ const logList: LogList = [
     log_id: 2,
     title: "迪士尼亲子行",
     content: `
-      <h2>美妙的一天</h2>
-      <p>和家人一起在迪士尼度过了开心的一天。</p>
-      <img src="https://dummyimage.com/600x400/faf/000&text=迪士尼合影" />
-      <video width="400" controls>
-        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-        您的浏览器不支持视频播放。
-      </video>
-      <p>孩子们玩得特别开心！</p>
+      <div class="travel-log">
+        <h2>美妙的一天</h2>
+        <p>和家人一起在迪士尼度过了开心的一天。</p>
+        <div class="video-wrapper">
+          <video controls width="100%">
+            <source src="${ASSET_PATH}/disney/family-day.mp4" type="video/mp4">
+            您的浏览器不支持视频播放。
+          </video>
+          <div class="caption">孩子们与米奇的互动瞬间</div>
+        </div>
+        <p>孩子们玩得特别开心！我们参观了奇幻王国、明日世界、宝藏湾和探险岛等多个主题园区。</p>
+        <div class="image-wrapper">
+          <img src="${ASSET_PATH}/disney/castle-evening.jpg" alt="迪士尼城堡夜景" />
+          <div class="caption">华灯初上的迪士尼城堡，梦幻无比</div>
+        </div>
+      </div>
     `,
     creator: "王五",
     add_time: "2025-01-15 14:00:00",
@@ -357,14 +376,72 @@ const logList: LogList = [
     log_id: 3,
     title: "乌镇水乡游记",
     content: `
-      <p>乌镇的水巷非常有特色，古色古香。</p>
-      <img src="https://dummyimage.com/600x300/ddd/000&text=乌镇水巷" />
+      <div class="travel-log">
+        <h2>古色古香的水乡</h2>
+        <p>乌镇的水巷非常有特色，古色古香。江南水乡的魅力在这里得到了完美的体现。</p>
+        <div class="image-wrapper">
+          <img src="${ASSET_PATH}/wuzhen/canal-view.jpg" alt="乌镇水巷" />
+          <div class="caption">清晨的乌镇水巷，宁静而美丽</div>
+        </div>
+        <p>住在临水的客栈，听着潺潺的水声入睡，是一种难忘的体验。白天可以逛逛各种手工艺品店，晚上还可以欣赏当地的特色表演。</p>
+        <div class="image-wrapper">
+          <img src="${ASSET_PATH}/wuzhen/lantern-night.jpg" alt="乌镇夜景" />
+          <div class="caption">夜晚的乌镇，灯火通明，别有一番风味</div>
+        </div>
+      </div>
     `,
     creator: "李四",
     add_time: "2025-03-12 08:25:00",
     status: "已拒绝",
   },
+  {
+    log_id: 4,
+    title: "黄山徒步之旅",
+    content: `
+      <div class="travel-log">
+        <h2>云海与奇松</h2>
+        <p>黄山不愧是中国最美的山之一，雄奇秀丽的山峰、变幻莫测的云海和形态各异的奇松，构成了一幅幅天然的画卷。</p>
+        <div class="image-wrapper">
+          <img src="${ASSET_PATH}/huangshan/sea-of-clouds.jpg" alt="黄山云海" />
+          <div class="caption">清晨的黄山云海，如梦如幻</div>
+        </div>
+        <p>爬山虽然辛苦，但看到这样的美景，所有的疲惫都值得了。特别是日出时分，阳光洒在云海上的那一刻，美不胜收。</p>
+        <div class="image-wrapper">
+          <img src="${ASSET_PATH}/huangshan/pine-tree.jpg" alt="黄山迎客松" />
+          <div class="caption">黄山著名的迎客松，傲立山巅</div>
+        </div>
+        <p>在山顶的宾馆住了一晚，感受到了与平时完全不同的宁静与壮美。黄山的星空也非常清晰，是观星的好地方。</p>
+      </div>
+    `,
+    creator: "赵六",
+    add_time: "2025-04-03 16:45:00",
+    status: "已通过",
+  },
+  {
+    log_id: 5,
+    title: "西藏拉萨朝圣之旅",
+    content: `
+      <div class="travel-log">
+        <h2>神圣的布达拉宫</h2>
+        <p>初到拉萨，就被布达拉宫的宏伟壮观所震撼。这座屹立在红山之上的宫殿，是藏传佛教的圣地，也是世界文化遗产。</p>
+        <div class="image-wrapper">
+          <img src="${ASSET_PATH}/tibet/potala-palace.jpg" alt="布达拉宫全景" />
+          <div class="caption">宏伟的布达拉宫全景</div>
+        </div>
+        <p>在拉萨，随处可见虔诚的朝圣者。他们有的五体投地，有的手持转经筒，口中念诵着经文，神情专注而平和。</p>
+        <div class="image-wrapper">
+          <img src="${ASSET_PATH}/tibet/jokhang-temple.jpg" alt="大昭寺" />
+          <div class="caption">大昭寺前的朝圣者</div>
+        </div>
+        <p>高原的阳光特别强烈，天空蓝得令人心醉。但也要注意高原反应，慢慢适应这里的海拔和气候。</p>
+      </div>
+    `,
+    creator: "孙七",
+    add_time: "2025-05-10 09:15:00",
+    status: "待审核",
+  }
 ];
+
 const logApi: LogListApi = {
   status: 0,
   msg: "",
@@ -441,6 +518,108 @@ function get(url: UrlType) {
 
 // 模拟的post请求
 
+// function post(url: UrlType, data: any) {
+//   return new Promise((res, rej) => {
+//     setTimeout(() => {
+//       switch (url) {
+//         case "/login":
+//           userInfo.data.account = data.account;
+//           if (data.account.indexOf("admin") === -1) {
+//             userInfo.data.type = "1";
+//             userInfo.data.username = "普通用户";
+//           }
+//           return res(userInfo);
+//         case "/addmenu":
+//           menu.push(data);
+//           return res(MockData[url]);
+//         case "/addmessage":
+//           msgList.push({
+//             ...data,
+//             m_id: Math.random(),
+//             creator: userInfo.data.username,
+//             add_time: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+//           });
+//           if (msg.data) {
+//             msg.data.total = msgList.length;
+//           }
+//           return res(MockData[url]);
+//         case "/delmenu":
+//           let newMenu = menu.filter((i) => i[MENU_KEY] !== data[MENU_KEY]);
+//           menu = newMenu.filter((i) => i[MENU_PARENTKEY] !== data[MENU_KEY]);
+//           return res(MockData[url]);
+//         case "/getmenuinfo": {
+//           const findInfo = menu.find((i) => i[MENU_KEY] === data[MENU_KEY]);
+//           if (findInfo) {
+//             MockData[url].data = findInfo;
+//           }
+//           return res(MockData[url]);
+//         }
+//         case "/editmenuinfo":
+//           menu = menu.map((item) => {
+//             if (item[MENU_KEY] === data[MENU_KEY]) {
+//               return data;
+//             }
+//             return item;
+//           });
+//           return res(MockData[url]);
+//         case "/getmessage":
+//           console.log("我是post请求，我被执行")
+//           let list = [...msgList];
+//           if (data.name) {
+//             list = list.filter((i) => i.name.includes(data.name));
+//           }
+//           if (data.description) {
+//             list = list.filter((i) => i.description.includes(data.description));
+//           }
+
+//           if (msg.data) {
+//             msg.data.total = list.length;
+//             msg.data.list = list;
+//           }
+//           return res(msg);
+
+//         case "/getloglist":
+//           return res(logApi);
+
+//         // 通过日志
+//         case "/approvelog":
+//           const approvedLog = logList.find(log => log.log_id === data.log_id);
+//           if (approvedLog) {
+//             approvedLog.status = "已通过"; // 修改为已通过状态
+//             // 数据更新完后，返回成功状态
+//             return res({ status: 0, msg: "审核通过成功" });
+//           }
+//           return res({ status: 1, msg: "未找到日志，审核失败" });
+
+//         // 删除日志
+//         case "/dellog":
+//           const deleteIndex = logList.findIndex(log => log.log_id === data.log_id);
+//           if (deleteIndex !== -1) {
+//             logList.splice(deleteIndex, 1); // 从列表中删除
+//             return res({ status: 0, msg: "删除成功" });
+//           }
+//           return res({ status: 1, msg: "未找到日志，删除失败" });
+
+//         default:
+//         res({ status: 1, msg: "暂无" });
+//         break;
+//       }
+//     }, 100);
+//   }).then((res: any) => {
+//     if (res.status === 0) {
+//       return res
+//     } else {
+//       message.error("接口暂未配置")
+//       return Promise.reject("接口暂未配置")
+//     }
+//   });
+// }
+
+// mock/index.ts 的修改部分
+
+// 只展示需要修改的部分代码
+
+// 模拟的post请求
 function post(url: UrlType, data: any) {
   return new Promise((res, rej) => {
     setTimeout(() => {
@@ -504,20 +683,61 @@ function post(url: UrlType, data: any) {
         case "/getloglist":
           return res(logApi);
 
+        // 通过日志
+        case "/approvelog":
+          const approvedLog = logList.find(log => log.log_id === data.id);
+          if (approvedLog) {
+            approvedLog.status = "已通过"; // 修改为已通过状态
+            // 更新API数据
+            logApi.data.list = [...logList];
+            // 返回成功状态
+            return res({ status: 0, msg: "审核通过成功" });
+          }
+          return rej({ status: 1, msg: "未找到日志，审核失败" });
+
+        // 拒绝日志
+        case "/rejectlog":
+          const rejectedLog = logList.find(log => log.log_id === data.id);
+          if (rejectedLog) {
+            rejectedLog.status = "已拒绝"; // 修改为已拒绝状态
+            // 更新API数据
+            logApi.data.list = [...logList];
+            // 返回成功状态
+            return res({ status: 0, msg: "审核拒绝成功" });
+          }
+          return rej({ status: 1, msg: "未找到日志，拒绝失败" });
+
+        // 删除日志
+        case "/dellog":
+          const deleteIndex = logList.findIndex(log => log.log_id === data.id);
+          if (deleteIndex !== -1) {
+            logList.splice(deleteIndex, 1); // 从列表中删除
+            // 更新API数据
+            logApi.data.list = [...logList];
+            logApi.data.total = logList.length;
+            return res({ status: 0, msg: "删除成功" });
+          }
+          return rej({ status: 1, msg: "未找到日志，删除失败" });
+
         default:
-        res({ status: 1, msg: "暂无" });
-        break;
+          res({ status: 1, msg: "暂无" });
+          break;
       }
     }, 100);
   }).then((res: any) => {
     if (res.status === 0) {
       return res
     } else {
-      message.error("接口暂未配置")
-      return Promise.reject("接口暂未配置")
+      message.error(res.msg || "接口暂未配置")
+      return Promise.reject(res.msg || "接口暂未配置")
     }
+  }).catch((err) => {
+    message.error(err?.msg || "操作失败");
+    return Promise.reject(err);
   });
 }
+
+// 其余代码保持不变...
 
 
 const mock = { get, post };

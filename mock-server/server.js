@@ -109,6 +109,17 @@ function getNotes() {
   return JSON.parse(notesData);
 }
 
+// 写入笔记到 JSON 文件
+function saveNotes(notes) {
+  try {
+    // 将更新后的笔记数据写入 note.json 文件
+    fs.writeFileSync(notesFilePath, JSON.stringify(notes, null, 2), 'utf-8');
+  } catch (error) {
+    console.error('Error saving notes:', error);
+    throw new Error('Failed to save notes');
+  }
+}
+
 // 模拟返回游记数据
 app.get("/api/notes", (req, res) => {
   const notes = getNotes();
@@ -198,6 +209,30 @@ app.post("/api/note/update", (req, res) => {
     res.status(500).json({ message: "内部服务器错误" });
   }
 });
+
+// 审核通过接口
+app.post("/api/note/approve", (req, res) => {
+  const { log_id } = req.body;
+  if (!log_id) {
+    return res
+      .status(400)
+      .json({ message: "log_id is required", status: "error" });
+  }
+  let notes = getNotes(); // 获取当前游记列表
+  const noteIndex = notes.findIndex((note) => note.log_id === log_id); // 查找对应游记
+  if (noteIndex === -1) {
+    return res
+      .status(404)
+      .json({ message: "Note not found", status: "error" });
+  }
+  // 更新游记状态为 approved
+  notes[noteIndex].status = "approved";
+  saveNotes(notes); // 保存更新后的数据
+  return res.json({ message: "Note approved successfully", status: "success" });
+});
+
+
+
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
