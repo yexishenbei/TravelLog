@@ -1,5 +1,6 @@
-import { Modal } from "antd";
-import { LogItem } from "@/types";
+import { Modal, Typography } from 'antd';
+import { LogItem } from '@/types';
+import './logDetail.less';
 
 interface LogDetailModalProps {
   visible: boolean;
@@ -7,19 +8,41 @@ interface LogDetailModalProps {
   onCancel: () => void;
 }
 
-export default function LogDetailModal({ visible, log, onCancel }: LogDetailModalProps) {
-  // 仅供测试：打印内容
-  console.log("查看详情：", log?.content);
+const LogDetailModal: React.FC<LogDetailModalProps> = ({ visible, log, onCancel }) => {
+  const { Title, Text } = Typography;
 
   return (
     <Modal
-      title={log?.title || "游记详情"}
+      title="游记详情"
       open={visible}
       onCancel={onCancel}
       footer={null}
       width={800}
+      className="log-detail-modal"
     >
-      <div>（此处为富文本详情展示区域）</div>
+      {log ? (
+        <div className="log-detail-container">
+          <div className="log-header">
+            <Title level={3}>{log.title}</Title>
+            <div className="log-meta">
+              <Text type="secondary">作者: {log.creator}</Text>
+              <Text type="secondary">添加时间: {log.add_time}</Text>
+              <Text type="secondary">
+                状态: <span className={`status ${log.status.replace(/[^\w\s]/g, '').toLowerCase()}`}>{log.status}</span>
+              </Text>
+            </div>
+          </div>
+          
+          <div className="log-content">
+            {/* 使用dangerouslySetInnerHTML来渲染富文本内容 */}
+            <div dangerouslySetInnerHTML={{ __html: log.content }} />
+          </div>
+        </div>
+      ) : (
+        <div className="log-loading">加载中...</div>
+      )}
     </Modal>
   );
-} 
+};
+
+export default LogDetailModal;

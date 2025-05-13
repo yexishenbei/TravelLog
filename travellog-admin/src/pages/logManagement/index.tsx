@@ -21,24 +21,34 @@ function useLogs() {
   const getData = () => {
     getLogList().then((res) => {
       if (res.status === 0 && res.data) {
-        const actionCol = {
-          title: "操作",
-          dataIndex: "action",
-          key: "action",
-          align: "center",
-          render: (_: any, record: LogItem) => (
-            <>
-              <Button type="link" onClick={() => handleViewDetail(record)}>查看详情</Button>
-              <Button type="link" onClick={() => handleApprove(record.log_id)}>通过</Button>
-              <Button type="link" danger onClick={() => handleReject(record.log_id)}>拒绝</Button>
-              <Popconfirm title="确认删除？" onConfirm={() => handleDelete(record.log_id)}>
-                <Button type="link" danger>删除</Button>
-              </Popconfirm>
-            </>
-          )
-        };
-        res.data.mapKey.push(actionCol);
-        setCol(res.data.mapKey);
+        // 先保存原始的 mapKey
+        const originalMapKey = [...res.data.mapKey];
+        
+        // 检查是否已经存在操作列
+        const hasActionColumn = originalMapKey.some(col => col.key === 'action');
+        
+        // 如果没有操作列，才添加
+        if (!hasActionColumn) {
+          const actionCol = {
+            title: "操作",
+            dataIndex: "action",
+            key: "action", // 使用固定的key，便于检查
+            align: "center",
+            render: (_: any, record: LogItem) => (
+              <>
+                <Button type="link" onClick={() => handleViewDetail(record)}>查看详情</Button>
+                <Button type="link" onClick={() => handleApprove(record.log_id)}>通过</Button>
+                <Button type="link" danger onClick={() => handleReject(record.log_id)}>拒绝</Button>
+                <Popconfirm title="确认删除？" onConfirm={() => handleDelete(record.log_id)}>
+                  <Button type="link" danger>删除</Button>
+                </Popconfirm>
+              </>
+            )
+          };
+          originalMapKey.push(actionCol);
+        }
+        
+        setCol(originalMapKey);
         setData(res.data.list);
       }
     });
