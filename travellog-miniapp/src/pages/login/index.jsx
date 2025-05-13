@@ -35,6 +35,7 @@ const Login = () => {
         // 保存 token 到本地存储
         Taro.setStorageSync("token", response.data.data.token);
         Taro.setStorageSync("userInfo", response.data.data.user);
+        console.log("Stored userInfo", response.data.data.user);
 
         Taro.showToast({ title: "登录成功", icon: "success" });
         Taro.switchTab({ url: "/pages/index/index" });

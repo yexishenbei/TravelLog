@@ -134,6 +134,35 @@ app.post("/api/note/update", (req, res) => {
   res.json({ message: "更新成功" });
 });
 
+// 保存 notes 到文件
+function saveNotes(notes) {
+  fs.writeFileSync(notesFilePath, JSON.stringify(notes, null, 2), "utf-8");
+}
+
+// 发布笔记接口
+app.post("/api/notes", (req, res) => {
+  const newNote = req.body;
+  console.log("收到的请求数据:", req.body); // 打印请求数据
+  if (!newNote.title || !newNote.content || !newNote.creator) {
+    return res.status(400).json({ message: "缺少必要字段", status: "error" });
+  }
+
+  const notes = getNotes();
+
+  const log_id = Date.now().toString(); // 生成唯一 ID
+
+  const noteToSave = {
+    ...newNote,
+    log_id, // 添加唯一 ID
+    status: "pending", // 强制设为待审核
+  };
+
+  notes.unshift(noteToSave); // 新笔记放到最前面
+  saveNotes(notes);
+
+  res.json({ message: "笔记已保存", status: "success" });
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
