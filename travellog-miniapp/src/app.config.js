@@ -6,6 +6,7 @@ export default defineAppConfig({
     "pages/note/detail",
     "pages/user/index",
     "pages/note/publish",
+    "pages/note/edit",
     "pages/search/index",
   ],
 
