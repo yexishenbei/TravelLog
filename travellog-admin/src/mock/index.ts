@@ -321,52 +321,6 @@ const msg: MessageAPi = {
   msg: "",
 };
 
-// 游记列表
-// const logList: LogList = [
-//   {
-//     log_id: 1,
-//     title: "上海城市印象",
-//     content: `
-//       <h2>外滩夜景</h2>
-//       <p>这是我第一次来到上海，夜晚的外滩灯火辉煌，令人震撼。</p>
-//       <img src="https://dummyimage.com/600x400/ccc/000&text=外滩夜景" />
-//       <p>这里有很多故事，也有很多人。</p>
-//     `,
-//     creator: "张同学",
-//     add_time: "2024-12-01 10:30:00",
-//     status: "待审核",
-//   },
-//   {
-//     log_id: 2,
-//     title: "迪士尼亲子行",
-//     content: `
-//       <h2>美妙的一天</h2>
-//       <p>和家人一起在迪士尼度过了开心的一天。</p>
-//       <img src="https://dummyimage.com/600x400/faf/000&text=迪士尼合影" />
-//       <video width="400" controls>
-//         <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-//         您的浏览器不支持视频播放。
-//       </video>
-//       <p>孩子们玩得特别开心！</p>
-//     `,
-//     creator: "王五",
-//     add_time: "2025-01-15 14:00:00",
-//     status: "已通过",
-//   },
-//   {
-//     log_id: 3,
-//     title: "乌镇水乡游记",
-//     content: `
-//       <p>乌镇的水巷非常有特色，古色古香。</p>
-//       <img src="https://dummyimage.com/600x300/ddd/000&text=乌镇水巷" />
-//     `,
-//     creator: "李四",
-//     add_time: "2025-03-12 08:25:00",
-//     status: "已拒绝",
-//   },
-// ];
-// 图片资源路径（模拟资源存储位置）
-// const ASSET_PATH = '/assets/travel';
 const ASSET_PATH = process.env.PUBLIC_URL + '/assets/travel'
 // const ASSET_PATH = '../../assets/travel';
 

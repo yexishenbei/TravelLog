@@ -7,18 +7,6 @@ const routes = [{
   [MENU_PATH]: "/details/person",
   components: () => import("..\\pages\\details\\person.tsx")
 }, {
-  [MENU_PATH]: "/form/index",
-  components: () => import("..\\pages\\form\\index.tsx")
-}, {
-  [MENU_PATH]: "/icons",
-  components: () => import("..\\pages\\icons\\index.tsx")
-}, {
-  [MENU_PATH]: "/statistics/visitor",
-  components: () => import("..\\pages\\statistics\\vistor.tsx")
-}, {
-  [MENU_PATH]: "/logManagement",
-  components: () => import("..\\pages\\logManagement\\index.tsx")
-}, {
   [MENU_PATH]: "/list/card",
   components: () => import("..\\pages\\list\\card.tsx")
 }, {
@@ -33,6 +21,18 @@ const routes = [{
 }, {
   [MENU_PATH]: "/power/user",
   components: () => import("..\\pages\\power\\user.tsx")
+}, {
+  [MENU_PATH]: "/form/index",
+  components: () => import("..\\pages\\form\\index.tsx")
+}, {
+  [MENU_PATH]: "/statistics/visitor",
+  components: () => import("..\\pages\\statistics\\vistor.tsx")
+}, {
+  [MENU_PATH]: "/logManagement",
+  components: () => import("..\\pages\\logManagement\\index.tsx")
+}, {
+  [MENU_PATH]: "/icons",
+  components: () => import("..\\pages\\icons\\index.tsx")
 }];
     
 
