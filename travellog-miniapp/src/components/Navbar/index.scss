@@ -1,78 +1,24 @@
-/* index.scss */
 .navbar {
-  height: 44px;
-  background-color: #fff;
   display: flex;
   align-items: center;
+  justify-content: flex-end; // 将内容推到右侧
+  height: 60px; // 撑开 navbar 高度
   padding: 0 16px;
-  position: relative;
-  border-bottom: 1px solid #f5f5f5;
+  background-color: #ffffff;
+  border-bottom: 1px solid #eeeeee;
 }
 
-.left,
-.right {
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  z-index: 1;
-}
-
-.left {
-  left: 0;
-}
-
-.right {
-  right: 0;
-}
-
-.icon {
-  font-size: 16px;
-  color: #333;
-}
-
-.title {
-  flex: 1;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 500;
-  color: #333;
-}
-
-.back-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 30px;
-  border-radius: 15px;
-  background-color: #f0f0f0;
-}
-
-.back-icon {
-  width: 20px;
-  height: 20px;
-}
-
-.logo {
-  width: 40px;
-  height: 40px;
-}
-
-.search-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 30px;
-  border-radius: 15px;
-  background-color: #f0f0f0;
-}
-
-.search-button text {
+.navbar-search {
+  padding: 8px 16px;
+  background-color: #f5f5f5;
+  border-radius: 16px;
   font-size: 14px;
-  color: #888;
+  color: #333;
+  text-align: center;
+  line-height: 1;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #2cbdf7;
 }

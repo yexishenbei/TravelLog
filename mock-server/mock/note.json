@@ -7,7 +7,8 @@
     "add_time": "2024-12-01 10:30:00",
     "status": "pending",
     "images": [
-      "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&h=1200&fit=crop"
+      "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&h=1200&fit=crop",
+      "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=800&h=1000&fit=crop"
     ],
     "videos": []
   },
@@ -19,9 +20,11 @@
     "add_time": "2025-01-15 14:00:00",
     "status": "approved",
     "images": [
-      "https://images.unsplash.com/photo-1560713781-d4a0c5b0c2c9?w=1200&h=800&fit=crop"
+      "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=800&h=1000&fit=crop"
     ],
-    "videos": []
+    "videos": [
+      "https://stream.media.imgix.video/5A2sgD7VEZ02yaP2drZepFPhxwneHLdkh/high.mp4?"
+    ]
   },
   {
     "log_id": 3,
