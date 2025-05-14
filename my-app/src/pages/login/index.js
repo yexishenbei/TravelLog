@@ -27,6 +27,7 @@ const Login = () => {
 
       // 将 token 存储到 localStorage 中
       localStorage.setItem('token', data.token)
+      localStorage.setItem("role", data.user.role);
 
       // 登录成功后跳转到首页
       navigator('/home')

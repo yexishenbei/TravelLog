@@ -8,8 +8,13 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false); // Modal的显示状态
   const [selectedJourney, setSelectedJourney] = useState(null); // 当前选择的游记详情
+  const [role, setRole] = useState(null);  // 用于存储当前用户角色
 
   useEffect(() => {
+    // 获取当前用户角色
+    const currentUserRole = localStorage.getItem("role"); // 从localStorage获取用户角色
+    setRole(currentUserRole);  // 设置角色
+
     const fetchData = async () => {
       try {
         const data = await getData();  // 调用getData函数获取数据
@@ -136,32 +141,43 @@ const Home = () => {
       render: (text, record) => {
         const isPending = record.status === 'pending';
 
+        // 判断当前用户角色，并决定显示哪些按钮
+        const canApprove = role === 'admin' || role === 'auditor';
+        const canReject = role === 'admin' || role === 'auditor';
+        const canDelete = role === 'admin';
+
         return (
           <Space size="middle">
             <Button type="link" onClick={() => showModal(record)}>查看详情</Button>
-            <Button 
-              type="link" 
-              style={{ color: isPending ? 'green' : 'gray' }} 
-              disabled={!isPending}  // 如果status不是pending，禁用按钮
-              onClick={() => handleApprove(record.log_id)}  // 点击“通过”后传递log_id
-            >
-              通过
-            </Button>
-            <Button 
-              type="link" 
-              style={{ color: isPending ? 'red' : 'gray' }} 
-              disabled={!isPending}  // 如果status不是pending，禁用按钮
-              onClick={() => handleReject(record.log_id)}  // 点击“拒绝”后传递log_id
-            >
-              拒绝
-            </Button>
-            <Button 
-              type="link" 
-              style={{ color: 'gray' }} 
-              onClick={() => handleDelete(record.log_id)}  // 点击“删除”后传递log_id
-            >
-              删除
-            </Button>
+            {canApprove && (
+              <Button 
+                type="link" 
+                style={{ color: isPending ? 'green' : 'gray' }} 
+                disabled={!isPending}  // 如果status不是pending，禁用按钮
+                onClick={() => handleApprove(record.log_id)}  // 点击“通过”后传递log_id
+              >
+                通过
+              </Button>
+            )}
+            {canReject && (
+              <Button 
+                type="link" 
+                style={{ color: isPending ? 'red' : 'gray' }} 
+                disabled={!isPending}  // 如果status不是pending，禁用按钮
+                onClick={() => handleReject(record.log_id)}  // 点击“拒绝”后传递log_id
+              >
+                拒绝
+              </Button>
+            )}
+            {canDelete && (
+              <Button 
+                type="link" 
+                style={{ color: 'gray' }} 
+                onClick={() => handleDelete(record.log_id)}  // 点击“删除”后传递log_id
+              >
+                删除
+              </Button>
+            )}
           </Space>
         );
       },
