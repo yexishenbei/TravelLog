@@ -12,9 +12,10 @@ axiosInstance.interceptors.request.use(
     const token = localStorage.getItem('token') //假设token存储在localStorage中
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
-    } else {
-      throw new Error('Token not found')
-    }
+    } 
+    // else {
+    //   throw new Error('Token not found')
+    // }
     return config
   },
   error => {

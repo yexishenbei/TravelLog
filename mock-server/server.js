@@ -8,6 +8,7 @@ const app = express();
 const port = 3000;
 const usersFilePath = path.join(__dirname, "mock", "users.json");
 const notesFilePath = path.join(__dirname, "mock", "note.json");
+const manageUsersFilePath = path.join(__dirname, "mock", "manage_user.json");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -16,6 +17,12 @@ app.use(bodyParser.json());
 let users = {};
 if (fs.existsSync(usersFilePath)) {
   users = JSON.parse(fs.readFileSync(usersFilePath, "utf-8"));
+}
+
+// 加载管理系统用户
+let manageUsers = {};
+if (fs.existsSync(manageUsersFilePath)) {
+  manageUsers = JSON.parse(fs.readFileSync(manageUsersFilePath, "utf-8"));
 }
 
 // 写入用户到 JSON 文件
@@ -229,6 +236,47 @@ app.post("/api/note/approve", (req, res) => {
   notes[noteIndex].status = "approved";
   saveNotes(notes); // 保存更新后的数据
   return res.json({ message: "Note approved successfully", status: "success" });
+});
+
+// 登录接口 - 管理后台
+app.post("/api/manage/login", (req, res) => {
+  const { username, password } = req.body;
+
+  console.log("Admin login attempt:", { username, password });
+
+  // 查找后台管理系统的用户
+  const user = manageUsers.find((user) => user.username === username);
+  if (!user || user.password !== password) {
+    return res
+      .status(401)
+      .json({ message: "Invalid username or password", status: "error" });
+  }
+
+  // 生成 token
+  const token = generateToken();
+
+  // 根据角色返回不同的信息
+  let roleInfo = {};
+  if (user.role === "admin") {
+    roleInfo = { role: "admin", permissions: ["manage", "audit", "view"] }; // 管理员有更多权限
+  } else if (user.role === "auditor") {
+    roleInfo = { role: "auditor", permissions: ["audit", "view"] }; // 审核员只有审核和查看权限
+  }
+
+  return res.json({
+    message: "Login successful",
+    status: "success",
+    data: {
+      token,
+      user: {
+        id: user.id,
+        username: user.username,
+        avatar: user.avatar,
+        role: user.role,
+        permissions: roleInfo.permissions,
+      },
+    },
+  });
 });
 
 app.listen(port, () => {

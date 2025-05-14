@@ -1,33 +1,48 @@
 import React from 'react'
-import { Form, Input, Button,message } from 'antd'
+import { Form, Input, Button, message } from 'antd'
 import './index.css'
 import { LoginApi } from './services'
 import { useNavigate, Navigate } from 'react-router-dom'
 
 const Login = () => {
-    const navigator = useNavigate()
-  //在登陆状态下，需要跳转到home页面
+  const navigator = useNavigate()
+  
+  // 在已经登录的状态下，跳转到首页
   if (localStorage.getItem('token')) {
     return <Navigate to='/home' />
   }
-  const handleSubmit = val => {
+
+  const handleSubmit = async (val) => {
     if (!val.password || !val.username) {
       message.warning('请输入用户名和密码')
+      return
     }
-    LoginApi(val).then(res => {
+
+    try {
+      // 调用 LoginApi 进行登录
+      const res = await LoginApi(val)
+
+      // 获取登录成功的响应数据
       const { data } = res
-    //   把token存到localStorage当中
-      localStorage.setItem('token', data.data.token)
+
+      // 将 token 存储到 localStorage 中
+      localStorage.setItem('token', data.token)
+
+      // 登录成功后跳转到首页
       navigator('/home')
-    })
+    } catch (error) {
+      // 如果登录失败，显示错误信息
+      message.error('登录失败，请检查用户名和密码')
+    }
   }
+
   return (
     <Form className='login-box' onFinish={handleSubmit}>
       <div className='title'>系统登录</div>
       <Form.Item
         label='账号'
         name='username'
-        rules={[{ required: true, message: 'Please input your username!' }]}
+        rules={[{ required: true, message: '请输入账号!' }]}
       >
         <Input placeholder='请输入账号' />
       </Form.Item>
@@ -35,10 +50,11 @@ const Login = () => {
       <Form.Item
         label='密码'
         name='password'
-        rules={[{ required: true, message: 'Please input your password!' }]}
+        rules={[{ required: true, message: '请输入密码!' }]}
       >
         <Input.Password placeholder='请输入密码' />
       </Form.Item>
+
       <Form.Item className='login-button'>
         <Button type='primary' htmlType='submit'>
           登录
@@ -47,4 +63,5 @@ const Login = () => {
     </Form>
   )
 }
+
 export default Login

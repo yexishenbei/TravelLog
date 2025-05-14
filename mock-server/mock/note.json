@@ -4,8 +4,10 @@
     "content": "成功",
     "creator": "张同学",
     "add_time": "2025-05-13T17:41:06.974Z",
-    "status": "pending",
-    "images": ["http://tmp/mbwKFrRdK0iTa54b6947ec75cb822315860bebecc482.png"],
+    "status": "approved",
+    "images": [
+      "http://tmp/mbwKFrRdK0iTa54b6947ec75cb822315860bebecc482.png"
+    ],
     "videos": [],
     "log_id": "1747158066992"
   },
@@ -15,7 +17,9 @@
     "creator": "张同学",
     "add_time": "2025-05-13T14:36:11.067Z",
     "status": "pending",
-    "images": ["http://tmp/mbwKFrRdK0iTa54b6947ec75cb822315860bebecc482.png"],
+    "images": [
+      "http://tmp/mbwKFrRdK0iTa54b6947ec75cb822315860bebecc482.png"
+    ],
     "videos": [],
     "log_id": "1747146971077"
   },
@@ -124,7 +128,7 @@
     "content": "大自然的鬼斧神工，造就了如此壮观的山水画卷。",
     "creator": "钱十一",
     "add_time": "2025-02-20 07:45:00",
-    "status": "pending",
+    "status": "approved",
     "images": [
       "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&h=1300&fit=crop"
     ],
