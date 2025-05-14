@@ -8,6 +8,7 @@ const app = express();
 const port = 3000;
 const usersFilePath = path.join(__dirname, "mock", "users.json");
 const notesFilePath = path.join(__dirname, "mock", "note.json");
+const manageUsersFilePath = path.join(__dirname, "mock", "manage_user.json");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -16,6 +17,12 @@ app.use(bodyParser.json());
 let users = {};
 if (fs.existsSync(usersFilePath)) {
   users = JSON.parse(fs.readFileSync(usersFilePath, "utf-8"));
+}
+
+// 加载管理系统用户
+let manageUsers = {};
+if (fs.existsSync(manageUsersFilePath)) {
+  manageUsers = JSON.parse(fs.readFileSync(manageUsersFilePath, "utf-8"));
 }
 
 // 写入用户到 JSON 文件
@@ -29,15 +36,30 @@ function generateToken() {
 }
 
 // 获取笔记
+// function getNotes() {
+//   try {
+//     const notesData = fs.readFileSync(notesFilePath, "utf-8");
+//     return JSON.parse(notesData); // 如果读取失败会抛出异常
+//   } catch (error) {
+//     console.error("Failed to read notes:", error);
+//     return []; // 返回空数组，避免崩溃
+//   }
+// }
+
+// 获取笔记
 function getNotes() {
   try {
     const notesData = fs.readFileSync(notesFilePath, "utf-8");
-    return JSON.parse(notesData); // 如果读取失败会抛出异常
+    const notes = JSON.parse(notesData);
+
+    // 过滤掉已删除的笔记
+    return notes.filter(note => !note.deleted);
   } catch (error) {
     console.error("Failed to read notes:", error);
     return []; // 返回空数组，避免崩溃
   }
 }
+
 
 // 保存笔记
 function saveNotes(notes) {
@@ -48,6 +70,7 @@ function saveNotes(notes) {
   }
 }
 
+// 注册接口
 app.post("/api/register", (req, res) => {
   const { username, password, avatar } = req.body;
 
@@ -104,10 +127,10 @@ app.post("/api/login", (req, res) => {
 });
 
 // 读取 note.json 文件
-function getNotes() {
-  const notesData = fs.readFileSync(notesFilePath, "utf-8");
-  return JSON.parse(notesData);
-}
+// function getNotes() {
+//   const notesData = fs.readFileSync(notesFilePath, "utf-8");
+//   return JSON.parse(notesData);
+// }
 
 // 写入笔记到 JSON 文件
 function saveNotes(notes) {
@@ -210,7 +233,7 @@ app.post("/api/note/update", (req, res) => {
   }
 });
 
-// 审核通过接口
+// 管理后台-审核通过接口
 app.post("/api/note/approve", (req, res) => {
   const { log_id } = req.body;
   if (!log_id) {
@@ -231,8 +254,109 @@ app.post("/api/note/approve", (req, res) => {
   return res.json({ message: "Note approved successfully", status: "success" });
 });
 
+// 登录接口 - 管理后台
+app.post("/api/manage/login", (req, res) => {
+  const { username, password } = req.body;
 
+  console.log("Admin login attempt:", { username, password });
 
+  // 查找后台管理系统的用户
+  const user = manageUsers.find((user) => user.username === username);
+  if (!user || user.password !== password) {
+    return res
+      .status(401)
+      .json({ message: "Invalid username or password", status: "error" });
+  }
+
+  // 生成 token
+  const token = generateToken();
+
+  // 根据角色返回不同的信息
+  let roleInfo = {};
+  if (user.role === "admin") {
+    roleInfo = { role: "admin", permissions: ["manage", "audit", "view"] }; // 管理员有更多权限
+  } else if (user.role === "auditor") {
+    roleInfo = { role: "auditor", permissions: ["audit", "view"] }; // 审核员只有审核和查看权限
+  }
+
+  return res.json({
+    message: "Login successful",
+    status: "success",
+    data: {
+      token,
+      user: {
+        id: user.id,
+        username: user.username,
+        avatar: user.avatar,
+        role: user.role,
+        permissions: roleInfo.permissions,
+      },
+    },
+  });
+});
+
+// 管理后台-删除笔记（逻辑删除）
+app.post("/api/note/deleteNote", (req, res) => {
+  console.log("body是什么",req.body)
+  const { log_id } = req.body;
+  console.log("请求到了吗",log_id)
+  let notes = getNotes();
+
+  // 查找并逻辑删除指定笔记
+  const noteIndex = notes.findIndex(note => note.log_id === log_id);
+  
+  if (noteIndex === -1) {
+    return res.status(404).json({ message: "笔记未找到", status: "error" });
+  }
+
+  // 标记为已删除
+  notes[noteIndex].deleted = true;
+  
+  saveNotes(notes);
+  res.json({ message: "笔记已逻辑删除",status: "success", });
+});
+
+// 管理后台-拒绝笔记（更改状态为rejected）
+app.post("/api/note/reject", (req, res) => {
+  const { log_id } = req.body;
+
+  if (!log_id) {
+    return res.status(400).json({ message: "log_id is required", status: "error" });
+  }
+
+  let notes = getNotes(); // 获取所有笔记
+  const noteIndex = notes.findIndex((note) => note.log_id === log_id); // 查找对应游记
+
+  if (noteIndex === -1) {
+    return res.status(404).json({ message: "Note not found", status: "error" });
+  }
+
+  // 更新游记状态为 rejected
+  notes[noteIndex].status = "rejected";
+  saveNotes(notes); // 保存更新后的数据
+
+  return res.json({ message: "Note rejected successfully", status: "success" });
+});
+
+// 获取所有已删除的笔记
+app.get("/api/deletedNotes", (req, res) => {
+  try {
+    console.log("我是否被执行？")
+    const notesData = fs.readFileSync(notesFilePath, "utf-8");
+    const notes = JSON.parse(notesData);
+
+    // 过滤出已删除的笔记
+    const deletedNotes = notes.filter(note => note.deleted);
+
+    res.json({
+      status: "success",
+      data: deletedNotes,
+    });
+  } catch (error) {
+    console.error("Failed to read notes:", error);
+    res.status(500).json({ message: "Error fetching deleted notes", status: "error" });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
