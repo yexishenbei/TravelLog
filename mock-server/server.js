@@ -36,15 +36,30 @@ function generateToken() {
 }
 
 // 获取笔记
+// function getNotes() {
+//   try {
+//     const notesData = fs.readFileSync(notesFilePath, "utf-8");
+//     return JSON.parse(notesData); // 如果读取失败会抛出异常
+//   } catch (error) {
+//     console.error("Failed to read notes:", error);
+//     return []; // 返回空数组，避免崩溃
+//   }
+// }
+
+// 获取笔记
 function getNotes() {
   try {
     const notesData = fs.readFileSync(notesFilePath, "utf-8");
-    return JSON.parse(notesData); // 如果读取失败会抛出异常
+    const notes = JSON.parse(notesData);
+
+    // 过滤掉已删除的笔记
+    return notes.filter(note => !note.deleted);
   } catch (error) {
     console.error("Failed to read notes:", error);
     return []; // 返回空数组，避免崩溃
   }
 }
+
 
 // 保存笔记
 function saveNotes(notes) {
@@ -55,6 +70,7 @@ function saveNotes(notes) {
   }
 }
 
+// 注册接口
 app.post("/api/register", (req, res) => {
   const { username, password, avatar } = req.body;
 
@@ -111,10 +127,10 @@ app.post("/api/login", (req, res) => {
 });
 
 // 读取 note.json 文件
-function getNotes() {
-  const notesData = fs.readFileSync(notesFilePath, "utf-8");
-  return JSON.parse(notesData);
-}
+// function getNotes() {
+//   const notesData = fs.readFileSync(notesFilePath, "utf-8");
+//   return JSON.parse(notesData);
+// }
 
 // 写入笔记到 JSON 文件
 function saveNotes(notes) {
@@ -217,7 +233,7 @@ app.post("/api/note/update", (req, res) => {
   }
 });
 
-// 审核通过接口
+// 管理后台-审核通过接口
 app.post("/api/note/approve", (req, res) => {
   const { log_id } = req.body;
   if (!log_id) {
@@ -278,6 +294,50 @@ app.post("/api/manage/login", (req, res) => {
     },
   });
 });
+
+// 管理后台-删除笔记（逻辑删除）
+app.post("/api/note/deleteNote", (req, res) => {
+  console.log("body是什么",req.body)
+  const { log_id } = req.body;
+  console.log("请求到了吗",log_id)
+  let notes = getNotes();
+
+  // 查找并逻辑删除指定笔记
+  const noteIndex = notes.findIndex(note => note.log_id === log_id);
+  
+  if (noteIndex === -1) {
+    return res.status(404).json({ message: "笔记未找到", status: "error" });
+  }
+
+  // 标记为已删除
+  notes[noteIndex].deleted = true;
+  
+  saveNotes(notes);
+  res.json({ message: "笔记已逻辑删除",status: "success", });
+});
+
+// 管理后台-拒绝笔记（更改状态为rejected）
+app.post("/api/note/reject", (req, res) => {
+  const { log_id } = req.body;
+
+  if (!log_id) {
+    return res.status(400).json({ message: "log_id is required", status: "error" });
+  }
+
+  let notes = getNotes(); // 获取所有笔记
+  const noteIndex = notes.findIndex((note) => note.log_id === log_id); // 查找对应游记
+
+  if (noteIndex === -1) {
+    return res.status(404).json({ message: "Note not found", status: "error" });
+  }
+
+  // 更新游记状态为 rejected
+  notes[noteIndex].status = "rejected";
+  saveNotes(notes); // 保存更新后的数据
+
+  return res.json({ message: "Note rejected successfully", status: "success" });
+});
+
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

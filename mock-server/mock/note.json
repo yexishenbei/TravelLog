@@ -1,54 +1,16 @@
 [
   {
-    "title": "testaddnote",
-    "content": "成功",
-    "creator": "张同学",
-    "add_time": "2025-05-13T17:41:06.974Z",
-    "status": "approved",
-    "images": [
-      "http://tmp/mbwKFrRdK0iTa54b6947ec75cb822315860bebecc482.png"
-    ],
-    "videos": [],
-    "log_id": "1747158066992"
-  },
-  {
     "title": "发布笔记 修改笔记",
     "content": "测试修改功能 测试发布功能",
     "creator": "张同学",
     "add_time": "2025-05-13T14:36:11.067Z",
-    "status": "pending",
+    "status": "approved",
     "images": [
       "http://tmp/mbwKFrRdK0iTa54b6947ec75cb822315860bebecc482.png"
     ],
     "videos": [],
-    "log_id": "1747146971077"
-  },
-  {
-    "log_id": "1",
-    "title": "上海城市印象",
-    "content": "这是我第一次来到上海，夜晚的外滩灯火辉煌，令人震撼。",
-    "creator": "张同学",
-    "add_time": "2024-12-01 10:30:00",
-    "status": "approved",
-    "images": [
-      "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&h=1200&fit=crop",
-      "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=800&h=1000&fit=crop"
-    ],
-    "videos": []
-  },
-  {
-    "log_id": "2",
-    "title": "迪士尼亲子行-改",
-    "content": "和家人一起在迪士尼度过了开心的一天，看到了很多可爱的卡通人物。",
-    "creator": "张同学",
-    "add_time": "2025-01-15 14:00:00",
-    "status": "pending",
-    "images": [
-      "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=800&h=1000&fit=crop"
-    ],
-    "videos": [
-      "https://stream.media.imgix.video/5A2sgD7VEZ02yaP2drZepFPhxwneHLdkh/high.mp4?"
-    ]
+    "log_id": "1747146971077",
+    "deleted": false
   },
   {
     "log_id": "3",
@@ -60,31 +22,8 @@
     "images": [
       "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=800&h=1000&fit=crop"
     ],
-    "videos": []
-  },
-  {
-    "log_id": "4",
-    "title": "杭州西湖春游",
-    "content": "春天的西湖美不胜收，樱花盛开，游人如织。",
-    "creator": "张同学",
-    "add_time": "2025-03-20 09:15:00",
-    "status": "approved",
-    "images": [
-      "https://images.unsplash.com/photo-1522383225653-ed111181a951?w=1200&h=900&fit=crop"
-    ],
-    "videos": []
-  },
-  {
-    "log_id": "5",
-    "title": "黄山云海日出",
-    "content": "凌晨四点起床，终于看到了壮观的云海日出。",
-    "creator": "孙七",
-    "add_time": "2025-02-28 05:30:00",
-    "status": "approved",
-    "images": [
-      "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=900&h=1200&fit=crop"
-    ],
-    "videos": []
+    "videos": [],
+    "deleted": true
   },
   {
     "log_id": "6",
@@ -96,7 +35,8 @@
     "images": [
       "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=1200&h=800&fit=crop"
     ],
-    "videos": []
+    "videos": [],
+    "deleted": false
   },
   {
     "log_id": "7",
@@ -104,11 +44,12 @@
     "content": "阳光、沙滩、海浪，这才是真正的度假生活。",
     "creator": "吴九",
     "add_time": "2025-02-15 16:45:00",
-    "status": "pending",
+    "status": "rejected",
     "images": [
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=1200&fit=crop"
     ],
-    "videos": []
+    "videos": [],
+    "deleted": false
   },
   {
     "log_id": "8",
@@ -120,31 +61,8 @@
     "images": [
       "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=1200&h=900&fit=crop"
     ],
-    "videos": []
-  },
-  {
-    "log_id": "9",
-    "title": "张家界奇峰异石",
-    "content": "大自然的鬼斧神工，造就了如此壮观的山水画卷。",
-    "creator": "钱十一",
-    "add_time": "2025-02-20 07:45:00",
-    "status": "approved",
-    "images": [
-      "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&h=1300&fit=crop"
-    ],
-    "videos": []
-  },
-  {
-    "log_id": "10",
-    "title": "丽江古城",
-    "content": "古城的夜晚，灯火阑珊，别有一番韵味。",
-    "creator": "孙十二",
-    "add_time": "2025-01-25 20:30:00",
-    "status": "approved",
-    "images": [
-      "https://images.unsplash.com/photo-1522383225653-ed111181a951?w=800&h=500&fit=crop"
-    ],
-    "videos": []
+    "videos": [],
+    "deleted": false
   },
   {
     "log_id": "11",
@@ -156,7 +74,8 @@
     "images": [
       "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&h=950&fit=crop"
     ],
-    "videos": []
+    "videos": [],
+    "deleted": false
   },
   {
     "log_id": "12",
@@ -168,6 +87,7 @@
     "images": [
       "https://images.unsplash.com/photo-1522383225653-ed111181a951?w=800&h=650&fit=crop"
     ],
-    "videos": []
+    "videos": [],
+    "deleted": false
   }
 ]

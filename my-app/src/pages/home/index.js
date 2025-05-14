@@ -1,8 +1,6 @@
-// home/index.js
-
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Space, message } from 'antd';
-import { getData, approveNote } from './services';  // 引入getData和approveNote请求函数
+import { getData, approveNote, rejectNote, deleteNote } from './services';  // 引入getData, approveNote, rejectNote, deleteNote请求函数
 import JourneyDetailModal from '../../components/journeyDetail'; // 引入JourneyDetailModal组件
 
 const Home = () => {
@@ -15,7 +13,6 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const data = await getData();  // 调用getData函数获取数据
-        // console.log(data,"data是什么")
         setHomeData(data.data);  // 更新表格数据
         setLoading(false);  // 设置loading为false
       } catch (error) {
@@ -31,10 +28,8 @@ const Home = () => {
   const handleApprove = async (log_id) => {
     try {
       const result = await approveNote(log_id);  // 调用approveNote请求函数
-      console.log(result,"result是啥")
       if (result.status === 'success') {
         message.success('审核通过成功');
-        // 更新表格数据中的状态为 approved
         setHomeData((prevData) =>
           prevData.map((note) =>
             note.log_id === log_id ? { ...note, status: 'approved' } : note
@@ -45,6 +40,44 @@ const Home = () => {
       }
     } catch (error) {
       message.error('审核请求失败');
+      console.error(error);
+    }
+  };
+
+  // 拒绝请求
+  const handleReject = async (log_id) => {
+    try {
+      const result = await rejectNote(log_id);  // 调用rejectNote请求函数
+      if (result.status === 'success') {
+        message.success('拒绝成功');
+        setHomeData((prevData) =>
+          prevData.map((note) =>
+            note.log_id === log_id ? { ...note, status: 'rejected' } : note
+          )
+        );
+      } else {
+        message.error(result.message || '拒绝失败');
+      }
+    } catch (error) {
+      message.error('拒绝请求失败');
+      console.error(error);
+    }
+  };
+
+  // 删除请求
+  const handleDelete = async (log_id) => {
+    try {
+      const result = await deleteNote(log_id);  // 调用deleteNote请求函数
+      if (result.status === 'success') {
+        message.success('删除成功');
+        setHomeData((prevData) =>
+          prevData.filter((note) => note.log_id !== log_id)  // 移除已删除的笔记
+        );
+      } else {
+        message.error(result.message || '删除失败');
+      }
+    } catch (error) {
+      message.error('删除请求失败');
       console.error(error);
     }
   };
@@ -63,7 +96,7 @@ const Home = () => {
       title: '序号',
       dataIndex: 'log_id',
       key: 'log_id',
-      render: (text, record, index) => index + 1, // 展示行号
+      render: (text, record, index) => index + 1, // 展示行号，但不会影响操作
     },
     {
       title: '标题',
@@ -110,7 +143,7 @@ const Home = () => {
               type="link" 
               style={{ color: isPending ? 'green' : 'gray' }} 
               disabled={!isPending}  // 如果status不是pending，禁用按钮
-              onClick={() => handleApprove(record.log_id)}  // 点击“通过”后触发审核操作
+              onClick={() => handleApprove(record.log_id)}  // 点击“通过”后传递log_id
             >
               通过
             </Button>
@@ -118,12 +151,14 @@ const Home = () => {
               type="link" 
               style={{ color: isPending ? 'red' : 'gray' }} 
               disabled={!isPending}  // 如果status不是pending，禁用按钮
+              onClick={() => handleReject(record.log_id)}  // 点击“拒绝”后传递log_id
             >
               拒绝
             </Button>
             <Button 
               type="link" 
-              style={{ color: 'gray' }}
+              style={{ color: 'gray' }} 
+              onClick={() => handleDelete(record.log_id)}  // 点击“删除”后传递log_id
             >
               删除
             </Button>
@@ -135,7 +170,6 @@ const Home = () => {
 
   return (
     <div>
-      {/* <h1>Home 页面</h1> */}
       <Table
         columns={columns}
         dataSource={homeData}  // 确保数据是一个数组
