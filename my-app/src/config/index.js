@@ -16,7 +16,7 @@ const menuList = [
   {
     path: '/user',
     name: 'user',
-    label: '用户管理',
+    label: '回收站',
     icon: 'UserOutlined',
     url: '/user/index'
   },

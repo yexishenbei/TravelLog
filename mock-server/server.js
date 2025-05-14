@@ -338,6 +338,25 @@ app.post("/api/note/reject", (req, res) => {
   return res.json({ message: "Note rejected successfully", status: "success" });
 });
 
+// 获取所有已删除的笔记
+app.get("/api/deletedNotes", (req, res) => {
+  try {
+    console.log("我是否被执行？")
+    const notesData = fs.readFileSync(notesFilePath, "utf-8");
+    const notes = JSON.parse(notesData);
+
+    // 过滤出已删除的笔记
+    const deletedNotes = notes.filter(note => note.deleted);
+
+    res.json({
+      status: "success",
+      data: deletedNotes,
+    });
+  } catch (error) {
+    console.error("Failed to read notes:", error);
+    res.status(500).json({ message: "Error fetching deleted notes", status: "error" });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
