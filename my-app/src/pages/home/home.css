@@ -1,0 +1,13 @@
+.filters {
+  margin-bottom: 16px;
+  font-size: 16px;
+}
+
+.filters .ant-checkbox-group {
+  display: flex;
+  gap: 16px;
+}
+
+.filters .ant-checkbox {
+  font-size: 16px;
+}

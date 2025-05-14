@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Space, message } from 'antd';
+import { Table, Button, Space, message, Checkbox } from 'antd';
 import { getData, approveNote, rejectNote, deleteNote } from './services';  // 引入getData, approveNote, rejectNote, deleteNote请求函数
 import JourneyDetailModal from '../../components/journeyDetail'; // 引入JourneyDetailModal组件
+import './home.css'
 
 const Home = () => {
   const [homeData, setHomeData] = useState([]);
@@ -9,6 +10,10 @@ const Home = () => {
   const [isModalVisible, setIsModalVisible] = useState(false); // Modal的显示状态
   const [selectedJourney, setSelectedJourney] = useState(null); // 当前选择的游记详情
   const [role, setRole] = useState(null);  // 用于存储当前用户角色
+  const [filters, setFilters] = useState({
+    approved: false,
+    rejected: false,
+  });
 
   useEffect(() => {
     // 获取当前用户角色
@@ -94,6 +99,30 @@ const Home = () => {
 
   const handleCancel = () => {
     setIsModalVisible(false);  // 关闭Modal
+  };
+
+  // 过滤数据
+  const filteredData = homeData.filter((note) => {
+    // 过滤掉已删除的笔记
+    if (note.deleted) return false;
+
+    // 如果两个复选框都选中了，展示所有未删除的数据
+    if (filters.approved && filters.rejected) {
+      return true;  // 显示所有未删除的数据
+    }
+
+    // 根据复选框选项过滤已通过和已拒绝的笔记
+    if (filters.approved && note.status !== 'approved') return false;
+    if (filters.rejected && note.status !== 'rejected') return false;
+
+    return true;
+  });
+
+  const handleFilterChange = (checkedValues) => {
+    setFilters({
+      approved: checkedValues.includes('approved'),
+      rejected: checkedValues.includes('rejected'),
+    });
   };
 
   const columns = [
@@ -186,9 +215,17 @@ const Home = () => {
 
   return (
     <div>
+      {/* 复选框 */}
+      <div className="filters">
+        <Checkbox.Group onChange={handleFilterChange} defaultValue={['approved', 'rejected']}>
+  <Checkbox value="approved">已通过</Checkbox>
+  <Checkbox value="rejected">已拒绝</Checkbox>
+</Checkbox.Group>
+      </div>
+
       <Table
         columns={columns}
-        dataSource={homeData}  // 确保数据是一个数组
+        dataSource={filteredData}  // 过滤后的数据
         rowKey="log_id"
         loading={loading}
         pagination={false}
