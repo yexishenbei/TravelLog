@@ -4,6 +4,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Button, Layout, Avatar, Dropdown } from 'antd'
 import { useDispatch } from 'react-redux'
 import { changeCollapse } from '../../store/reducers/tab'
+import { useNavigate } from 'react-router-dom'
 import './index.css'
 
 const { Header } = Layout
@@ -12,8 +13,14 @@ const MyHeader = props => {
   const { collapsed, setCollapsed, Collapsed } = props
   const dispatch = useDispatch()
 
+  const navigat = useNavigate()
   //登出
-  const logout = () => {}
+  const logout = () => {
+    console.log("我被执行了吗？")
+    //清除token
+    localStorage.removeItem('token')
+    navigat('/login')
+  }
 
   const items = [
     {
@@ -27,7 +34,7 @@ const MyHeader = props => {
     {
       key: '2',
       label: (
-        <a target='_blank' onClick={() => logout} rel='noopener noreferrer'>
+        <a target='_blank' onClick={() => logout()} rel='noopener noreferrer'>
           退出
         </a>
       )
