@@ -4,7 +4,7 @@
     "content": "测试修改功能 测试发布功能",
     "creator": "张同学",
     "add_time": "2025-05-13T14:36:11.067Z",
-    "status": "approved",
+    "status": "pending",
     "images": [
       "http://tmp/mbwKFrRdK0iTa54b6947ec75cb822315860bebecc482.png"
     ],
@@ -31,7 +31,7 @@
     "content": "漫步在古老的胡同里，感受老北京的生活气息。",
     "creator": "周八",
     "add_time": "2025-01-10 11:20:00",
-    "status": "approved",
+    "status": "pending",
     "images": [
       "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=1200&h=800&fit=crop"
     ],
@@ -57,7 +57,7 @@
     "content": "从火锅到串串，从兔头到抄手，成都的美食让人流连忘返。",
     "creator": "郑十",
     "add_time": "2025-03-05 12:30:00",
-    "status": "approved",
+    "status": "pending",
     "images": [
       "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=1200&h=900&fit=crop"
     ],

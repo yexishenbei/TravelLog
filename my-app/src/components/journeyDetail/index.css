@@ -1,0 +1,68 @@
+/* Modal 样式 */
+.journey-detail-modal .ant-modal-header {
+  /* background-color: #f0f2f5; */
+  font-weight: bold;
+  color: #333;
+}
+
+.journey-detail-modal .ant-modal-title {
+  font-size: 18px;
+}
+
+/* 移除 Modal 背景阴影 */
+.journey-detail-modal .ant-modal-content {
+  box-shadow: none;
+}
+
+/* Card 样式 */
+.journey-card {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.journey-card p {
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.journey-card strong {
+  color: #4c4c4c;
+}
+
+/* 作者、时间和状态放一行，并加灰色 */
+.journey-header p {
+  font-size: 14px;
+  margin: 0;
+  color: #888;
+}
+
+.journey-header span {
+  margin-right: 20px;
+}
+
+/* 图片轮播样式 */
+.image-section {
+  margin-top: 10px;
+}
+
+.journey-image {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* 视频样式 */
+.video-section {
+  margin-top: 10px;
+}
+
+.journey-video {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.journey-detail-modal .ant-modal-footer {
+  display: none;
+}

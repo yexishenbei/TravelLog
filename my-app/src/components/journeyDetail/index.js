@@ -1,6 +1,6 @@
-// components/JourneyDetailModal.js
 import React from 'react';
-import { Modal, Card } from 'antd';
+import { Modal, Card, Carousel } from 'antd';
+import './index.css'; // 引入CSS文件
 
 const JourneyDetailModal = ({ visible, onCancel, journey }) => {
   return (
@@ -10,35 +10,44 @@ const JourneyDetailModal = ({ visible, onCancel, journey }) => {
       onCancel={onCancel}
       footer={null}
       width={600}
+      className="journey-detail-modal"
     >
       {journey && (
-        <Card title={journey.title}>
-          <p><strong>创建人：</strong>{journey.creator}</p>
-          <p><strong>创建时间：</strong>{journey.add_time}</p>
-          <p><strong>审核状态：</strong>{journey.status === 'pending' ? '待审核' : journey.status === 'approved' ? '已通过' : '已拒绝'}</p>
+        <Card title={journey.title} className="journey-card">
+          {/* 作者、时间和状态放在一行 */}
+          <div className="journey-header">
+            <p><span><strong>作者：</strong>{journey.creator}</span> 
+              <span><strong>发布时间：</strong>{journey.add_time}</span> 
+              <span><strong>状态：</strong>{journey.status === 'pending' ? '待审核' : journey.status === 'approved' ? '已通过' : '已拒绝'}</span>
+            </p>
+          </div>
           <p><strong>内容：</strong>{journey.content}</p>
-          <div>
-            <strong>图片：</strong>
-            <div>
-              {journey.images.map((image, index) => (
-                <img key={index} src={image} alt="游记图片" style={{ width: '100px', marginRight: '10px' }} />
-              ))}
+          
+          {/* 图片轮播 */}
+          {journey.images.length > 0 && (
+            <div className="image-section">
+              <strong>图片：</strong>
+              <Carousel autoplay>
+                {journey.images.map((image, index) => (
+                  <div key={index}>
+                    <img src={image} alt={`游记图片 ${index}`} className="journey-image" />
+                  </div>
+                ))}
+              </Carousel>
             </div>
-          </div>
-          <div>
-            <strong>视频：</strong>
-            <div>
-              {journey.videos.length > 0 ? (
-                journey.videos.map((video, index) => (
-                  <video key={index} controls style={{ width: '100%' }}>
-                    <source src={video} type="video/mp4" />
-                  </video>
-                ))
-              ) : (
-                <p>暂无视频</p>
-              )}
+          )}
+          
+          {/* 视频放在最后，宽度占满整个卡片 */}
+          {journey.videos.length > 0 ? (
+            <div className="video-section">
+              <strong>视频：</strong>
+              <video controls className="journey-video">
+                <source src={journey.videos[0]} type="video/mp4" />
+              </video>
             </div>
-          </div>
+          ) : (
+            <p>暂无视频</p>
+          )}
         </Card>
       )}
     </Modal>

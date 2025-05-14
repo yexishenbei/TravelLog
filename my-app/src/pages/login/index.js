@@ -39,7 +39,7 @@ const Login = () => {
 
   return (
     <Form className='login-box' onFinish={handleSubmit}>
-      <div className='title'>系统登录</div>
+      <div className='title'>游记后台管理系统</div>
       <Form.Item
         label='账号'
         name='username'
